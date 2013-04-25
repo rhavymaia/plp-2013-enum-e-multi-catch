@@ -1,0 +1,29 @@
+   {
+      classe Contador {
+          int valor = 1;
+          proc print() {
+            write(this.valor)
+          }
+      },
+      enum Enumerado {
+       	 A, B, C, D;
+       	 int valor = 2;
+         proc print() {
+       		write("print")
+         }		
+      }  ;
+
+      {
+	int primitivo = 2,
+	Integer i2 := new Integer,
+	Integer i := new Integer ;
+    i := 3 + 2;
+    primitivo := i;
+    i := 5 + i.valor + i2;
+    i2 := i2 + i.valor + 7;
+    i2 := primitivo;
+    write("Valor do primitivo: " ++ primitivo);
+	write("Valor do Integer i: " ++ i)
+   }
+
+   }

@@ -1,0 +1,4 @@
+base referer
+rect $interfaceplp_1_1puma_1_1memoria_1_1_ambiente_compilacao.html 6,80 267,107
+rect $interfaceplp_1_1puma_1_1memoria_1_1_ambiente_execucao.html 291,80 542,107
+rect $classplp_1_1puma_1_1memoria_1_1_contexto_compilacao.html 7,155 266,182

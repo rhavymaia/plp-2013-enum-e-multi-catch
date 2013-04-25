@@ -1,0 +1,31 @@
+{
+	classe String {
+		string valor = "";
+		
+		proc print() {
+            write(this.valor)
+        }
+	},
+	
+	classe Integer {
+		int valor = 0;
+
+		proc print() {
+            write(this.valor)
+        }
+	},
+
+	classe Boolean {
+		boolean valor = false;
+
+		proc print() {
+            write(this.valor)
+        }
+	};
+
+	{
+		int x = 5;
+		write("Ambiente Inicializado...")
+	}
+	
+}

@@ -1,0 +1,26 @@
+{
+	enum Enumerado(){
+
+		um, dois, tres;
+		
+		int i = 7;
+
+		proc imprime(string s){
+			write(s)
+		}
+
+	}
+
+	;
+	
+	{
+		Enumerado e := new Enumerado,
+		Enumerado c := Enumerado.um,
+		string msg = mensagem;
+	
+		p.imprime(msg);
+	}
+
+}
+
+//@Marcos: Se conseguir colocar o enumerado sem procedimentos, exemplificar aqui.

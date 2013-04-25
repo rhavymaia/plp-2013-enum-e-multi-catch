@@ -1,0 +1,6 @@
+base referer
+rect $interfaceplp_1_1puma_1_1comando_1_1_comando.html 6,6 203,32
+rect $classplp_1_1puma_1_1comando_1_1_procedimento.html 142,96 363,123
+rect $classplp_1_1puma_1_1memoria_1_1colecao_1_1_lista_valor.html 387,96 632,123
+rect $classplp_1_1puma_1_1declaracao_1_1procedimento_1_1_lista_declaracao_parametro.html 227,6 619,32
+rect $classplp_1_1puma_1_1expressao_1_1_lista_expressao.html 656,96 894,123

@@ -1,0 +1,17 @@
+plp.puma
+plp.puma.comando
+plp.puma.declaracao
+plp.puma.declaracao.classe
+plp.puma.declaracao.procedimento
+plp.puma.declaracao.variavel
+plp.puma.excecao.declaracao
+plp.puma.excecao.execucao
+plp.puma.expressao
+plp.puma.expressao.binaria
+plp.puma.expressao.leftExpression
+plp.puma.expressao.unaria
+plp.puma.expressao.valor
+plp.puma.memoria
+plp.puma.memoria.colecao
+plp.puma.parser
+plp.puma.util

@@ -1,0 +1,6 @@
+base referer
+rect $interfaceplp_1_1puma_1_1comando_1_1_comando.html 6,173 203,200
+rect $classplp_1_1puma_1_1expressao_1_1_lista_expressao.html 227,173 464,200
+rect $interfaceplp_1_1puma_1_1expressao_1_1_expressao.html 455,5 663,32
+rect $interfaceplp_1_1puma_1_1expressao_1_1left_expression_1_1_left_expression.html 539,83 862,109
+rect $classplp_1_1puma_1_1expressao_1_1left_expression_1_1_id.html 558,173 803,200

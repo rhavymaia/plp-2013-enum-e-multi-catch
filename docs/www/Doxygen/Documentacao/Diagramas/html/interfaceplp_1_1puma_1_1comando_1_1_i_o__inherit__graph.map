@@ -1,0 +1,4 @@
+base referer
+rect $classplp_1_1puma_1_1comando_1_1_read.html 5,155 176,182
+rect $classplp_1_1puma_1_1comando_1_1_write.html 200,155 371,182
+rect $interfaceplp_1_1puma_1_1comando_1_1_comando.html 89,6 287,32

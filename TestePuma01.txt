@@ -1,0 +1,69 @@
+   {
+      classe Contador {
+          int valor = 1;
+          proc print() {
+            write(this.valor)
+          }
+      },
+      enum Enumerado {
+       	 A, B, C, D;
+       	 int valor = 5;
+         proc print() {
+       		write(this.valor)
+         }		
+      },
+      
+      classe Contador2 {
+          int valor = 1;
+          proc print() {
+            write(this.valor)
+          }
+      },
+      
+      enum Enumerado2 {
+       	 D, E;
+       	 int valor = 2;
+         proc print() {
+       		write("print")
+         }		
+      }
+               
+      ;
+
+      {
+	int a = 2,
+	string texto = "ola",
+	string b = "casa",
+	boolean ok = true,
+	Enumerado e := Enumerado.C,
+	Enumerado e2 := Enumerado.D,
+	Contador c := new Contador,
+	Contador c2 := new Contador,
+	Integer i2 := new Integer,
+	Integer i := new Integer,
+	String str := new String
+        ;
+    e := e2.D;
+    e.print();
+    a := e.valor + 3;
+    write("Valor do Enum: " ++ e);
+    i := 3 + 2;
+    a := i;
+    i := 5 + i.valor + i2;
+    i2 := i2 + i.valor + 7;
+    a := i2;
+    str := "teste";
+    
+    write("Valor do Objeto: " ++ a);
+ 	write("Digita uma string: ");
+	read(b);
+	write("Digite um numero Integer: ");
+	read(a);
+	write("Digite um valor booleano: ");
+	read(ok);
+	write("O string lido foi: "++b);
+	write("O int lido foi: "++a);
+	write("O boolean lido foi: "++ok)
+     }
+
+   }

@@ -1,0 +1,11 @@
+base referer
+rect $interfaceplp_1_1puma_1_1declaracao_1_1_declaracao.html 7,81 223,108
+rect $interfaceplp_1_1puma_1_1declaracao_1_1classe_1_1_dec_classe.html 280,56 536,83
+rect $interfaceplp_1_1puma_1_1declaracao_1_1variavel_1_1_dec_variavel.html 273,132 543,159
+rect $classplp_1_1puma_1_1declaracao_1_1classe_1_1_dec_classe_composta.html 601,5 916,32
+rect $classplp_1_1puma_1_1declaracao_1_1classe_1_1_dec_classe_simples.html 608,56 909,83
+rect $classplp_1_1puma_1_1declaracao_1_1classe_1_1_dec_enum_simples.html 979,56 1275,83
+rect $classplp_1_1puma_1_1declaracao_1_1variavel_1_1_composta_dec_variavel.html 593,107 924,133
+rect $classplp_1_1puma_1_1declaracao_1_1variavel_1_1_dec_variavel_objeto.html 604,157 913,184
+rect $classplp_1_1puma_1_1declaracao_1_1variavel_1_1_simples_dec_variavel.html 600,208 917,235
+rect $classplp_1_1puma_1_1declaracao_1_1variavel_1_1_dec_variavel_enum.html 975,157 1279,184

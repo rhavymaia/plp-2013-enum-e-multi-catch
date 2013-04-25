@@ -1,0 +1,26 @@
+ {
+ 	enum Enumerado {
+ 		A, B, C, D;
+ 		int valor = 2;
+ 		proc print() {
+ 			write("print")
+		}		
+	};
+	{
+		Enumerado e := Enumerado.C,
+		Enumerado e2 := Enumerado.A;
+	    e := e2;
+	    e2 := e.B;
+    	//write("Valor do Enum: " ++ e);
+	    
+	    try { 
+	    	throw "erro!"
+    	}
+	    catch (VariavelNaoDeclaradaException e) {	
+	    	write(e) 
+    	}
+    	finally {
+    		write("finally!")
+    	}
+	}
+}

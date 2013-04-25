@@ -1,0 +1,45 @@
+{
+	classe Generica(){
+
+		int a = 7;
+
+		proc imprime(string s){
+			write(s)
+		}
+	}
+	,
+
+	classe Mescla<Generica>(){
+
+		int a = 0;
+
+		proc leia(string s){
+			read(s)
+		}
+	}
+	,
+	classe Enumerado(){
+		A, B, C;
+		
+		int c = 0;
+	
+		proc imprime(int s){
+			write( s+c )
+		}
+	}	
+
+	;
+	
+	{
+		string msg = "Programa de PLP",
+		String mensagem := msg,		
+		Mescla m := new Mescla,
+		Enumerado e := new Enumerado;
+
+		s.imprime(mensagem.valor);
+		p.imprime(msg);
+	}
+
+}
+
+@Alterar generics aqui tb...

@@ -1,0 +1,6 @@
+base referer
+rect $interfaceplp_1_1puma_1_1util_1_1_tipo.html 5,56 133,83
+rect $classplp_1_1puma_1_1util_1_1_tipo_classe.html 187,6 355,32
+rect $classplp_1_1puma_1_1util_1_1_tipo_generic.html 184,56 357,83
+rect $classplp_1_1puma_1_1util_1_1_tipo_primitivo.html 181,107 360,134
+rect $classplp_1_1puma_1_1util_1_1_tipo_classe_generic.html 409,6 623,32
