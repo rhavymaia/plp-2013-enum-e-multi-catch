@@ -1,0 +1,22 @@
+{
+	classe Boxing(){
+
+		int a = 7;
+
+		proc imprime(string s){
+			write(s)
+		}
+	}
+
+	;
+	
+	{
+		string msg = "Programa de PLP",
+		String mensagem := msg,		
+		Boxing p := new Boxing;
+
+		p.imprime(mensagem.valor);
+		p.imprime(msg);
+	}
+
+}

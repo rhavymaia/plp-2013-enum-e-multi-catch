@@ -1,0 +1,19 @@
+{
+    classe Colecao<T> {
+        string valor = "vazio";
+
+	proc set(string v) {
+            this.valor := v
+        },
+
+	proc print() {
+            write(this.valor) 
+        }
+    };
+    
+    {
+        Colecao<String> c := new Colecao<String>;
+        c.set("Teste de Generic2");
+        c.print()
+    }
+}

@@ -1,0 +1,22 @@
+{
+	classe Predefinida(){
+
+		int a = 7;
+
+		proc imprime(string s){
+			write(s)
+		}
+	}
+
+	;
+	
+	{
+		string msg = "Programa de PLP",
+		String mensagem := msg,		
+		Predefinida p := new Predefinida;
+
+		p.imprime(mensagem.valor);
+		p.imprime(msg);
+	}
+
+}

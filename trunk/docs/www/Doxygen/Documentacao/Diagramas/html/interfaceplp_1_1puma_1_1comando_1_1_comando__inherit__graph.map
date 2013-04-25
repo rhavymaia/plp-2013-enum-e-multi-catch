@@ -1,0 +1,10 @@
+base referer
+rect $classplp_1_1puma_1_1comando_1_1_atribuicao.html 292,6 489,32
+rect $classplp_1_1puma_1_1comando_1_1_chamada_metodo.html 271,56 511,83
+rect $classplp_1_1puma_1_1comando_1_1_chamada_procedimento.html 252,107 529,134
+rect $classplp_1_1puma_1_1comando_1_1_com_declaracao.html 273,158 508,184
+rect $classplp_1_1puma_1_1comando_1_1_if_then_else.html 289,208 492,235
+rect $interfaceplp_1_1puma_1_1comando_1_1_i_o.html 315,259 467,286
+rect $classplp_1_1puma_1_1comando_1_1_new.html 308,310 473,336
+rect $classplp_1_1puma_1_1comando_1_1_sequencial.html 288,360 493,387
+rect $classplp_1_1puma_1_1comando_1_1_while.html 305,411 476,438

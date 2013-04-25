@@ -1,0 +1,32 @@
+{
+	classe Generica(){
+
+		int a = 7;
+
+		proc imprime(string s){
+			write(s)
+		}
+	}
+	,	
+
+	classe Teste <Generica>{
+		
+		int a = 7;
+
+		proc leia(string s){
+			read(s)
+		}		
+	}
+
+	;
+	
+	{
+		Teste t := new Teste,
+		string s;
+
+		t.leia(s);
+	}
+
+}
+
+@Heitor: Tô voando nisso...Dá uma luz aí :op
