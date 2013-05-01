@@ -18,6 +18,7 @@ import plp.puma.expressao.valor.*;
 import plp.puma.comando.*;
 import plp.puma.declaracao.classe.*;
 import plp.puma.declaracao.variavel.*;
+import plp.puma.declaracao.constante.*;
 import plp.puma.declaracao.*;
 import plp.puma.declaracao.procedimento.*;
 import plp.puma.memoria.*;
@@ -1248,21 +1249,64 @@ DecClasseComposta PDecClasseComposta():
 
 
 /**
- * ... "enum" Id "{" DecVariavel ";" DecProcedimento "}"
+ * Novo formato
+ * ... "enum" Id "{" ListaConstanteEnum ";" DecVariavel ";" DecProcedimento "}"
+ * DecVariavelConstEnum := Atributos
  **/
-DecEnumSimples PDecEnumAtomica():
+DecEnum PDecEnumAtomica():
 {
 	Id nomeEnum;
-	ListaId ids;
+	ListaConstanteEnum constantes = null;
 	DecVariavel atributos = null;
 	DecProcedimento metodos = null;
 }
 {
-	<ENUM> nomeEnum = PId() <LBRACE> ids = PListaId() <SEMICOLON> atributos = PDecVariavel() <SEMICOLON> metodos = PDecProcedimento() <RBRACE>
+	<ENUM> nomeEnum = PId() <LBRACE> constantes = PListaConstantesEnum() <SEMICOLON> atributos = PDecVariavel() <SEMICOLON> metodos = PDecProcedimento() <RBRACE>
 	{
-		return new DecEnumSimples(nomeEnum, ids, atributos, metodos);
+		return new DecEnum(nomeEnum, constantes, atributos, metodos);
 	}
 }
+
+/**
+ * ListaConstanteEnum ::=  ConstanteEnum | ConstanteEnum "," ListaConstanteEnum
+ */
+ListaConstanteEnum PListaConstantesEnum() :
+{
+  ListaConstanteEnum retorno;
+  ConstanteEnum constanteEnum;}
+{
+  (    LOOKAHEAD(PConstanteEnum() <COMMA>)
+    	retorno = PListaConstantesEnumComposto()
+  	| constanteEnum = PConstanteEnum()
+	{
+	   return new ListaConstanteEnum(constanteEnum);	}	  
+  ) 
+  {      
+    return retorno;  }}
+
+/**
+ * ... ConstanteEnum "," ListaConstanteEnum
+ */
+ListaConstanteEnum PListaConstantesEnumComposto():
+{
+  ConstanteEnum constanteEnum;
+  ListaConstanteEnum constantesEnum;}{
+  constanteEnum = PConstanteEnum() <COMMA> constantesEnum = PListaConstantesEnum()
+  {
+    return new ListaConstanteEnum(constanteEnum, constantesEnum);  }}
+
+/**
+ * ConstanteEnum ::=  Id | Id "(" ListaExpressao ")"
+ */
+ConstanteEnum PConstanteEnum() :{
+  Id nomeMetodo =  null;
+  ListaExpressao listaExpressao = null;}{
+  (    LOOKAHEAD(PId() <LPAREN> listaExpressao = PListaExpressao() <RPAREN>)
+	nomeMetodo = PId() <LPAREN> listaExpressao = PListaExpressao() <RPAREN> 
+	| nomeMetodo = PId()
+  )
+  {
+    return new ConstanteEnum(nomeMetodo, listaExpressao);  }}
 
 /**
  * DecVariavel ::= Tipo Id "=" Expressao
