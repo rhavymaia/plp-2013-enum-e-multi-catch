@@ -1,0 +1,32 @@
+{
+ 	classe Contador {
+	      int valor = 1;
+	      
+		  proc Contador(string nome){
+			 write("Olá: " ++ nome)
+		  },
+		  proc print() {
+	        write(this.valor)
+	      }
+	},
+	enum Enumerado {
+	   	A(1,2), B(1,2), C(1,2), D(1,2);
+	   	int valor = 2;
+		proc print() {
+			write("print")
+		}		
+	};
+
+	{		
+		int alfa = 0,
+		Enumerado e := Enumerado.C,
+		Enumerado e2 := Enumerado.A,
+		Contador c := new Contador;
+		
+		c.Contador("Rhavy");
+		alfa := 2;
+		e := e2;
+		e2 := e.B;
+		write("Valor do Enum: " ++ e ++  3 ++ alfa)
+	}
+ }
