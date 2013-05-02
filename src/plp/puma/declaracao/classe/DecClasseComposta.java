@@ -65,7 +65,9 @@ public class DecClasseComposta implements DecClasse {
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ClasseJaDeclaradaException, ClasseNaoDeclaradaException,
 			ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException {
-		return declaracao1.checaTipo(ambiente)
-				&& declaracao2.checaTipo(ambiente);
+		boolean dec1 = declaracao1.checaTipo(ambiente);
+		boolean dec2 = declaracao2.checaTipo(ambiente);
+		
+		return dec1 && dec2;
 	}
 }
