@@ -17,17 +17,17 @@ import plp.puma.util.TipoClasse;
 /**
  * Enum que representa a declaração de uma única classe.
  */
-public class DecEnumSimples extends DecClasseSimples {
+public class DecEnum extends DecClasseSimples {
 
 	/**
 	 * Lista de Identificadors
 	 */
-	private ListaId listaId;
+	private ListaConstanteEnum listaConstanteEnum;
 
-	public DecEnumSimples(Id nomeClasse, ListaId listaId,
+	public DecEnum(Id nomeClasse, ListaConstanteEnum listaConstanteEnum,
 			DecVariavel atributos, DecProcedimento metodos) {
 		super(nomeClasse, atributos, metodos);
-		this.listaId = listaId;
+		this.listaConstanteEnum = listaConstanteEnum;
 	}
 
 	/**
@@ -48,7 +48,8 @@ public class DecEnumSimples extends DecClasseSimples {
 	 */
 	public AmbienteExecucao elabora(AmbienteExecucao ambiente)
 			throws ClasseJaDeclaradaException, ClasseNaoDeclaradaException {
-		ambiente.mapDefClasse(nomeClasse, new DefEnum(listaId, atributos,
+		
+		ambiente.mapDefClasse(nomeClasse, new DefEnum(listaConstanteEnum, atributos,
 				metodos));
 		return ambiente;
 	}
@@ -67,10 +68,14 @@ public class DecEnumSimples extends DecClasseSimples {
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ClasseJaDeclaradaException, ClasseNaoDeclaradaException,
 			ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException {
-		ambiente.mapDefClasse(nomeClasse, new DefEnum(listaId, atributos,
+
+		ambiente.mapDefClasse(nomeClasse, new DefEnum(listaConstanteEnum, atributos,
 				metodos));
+
 		boolean resposta = false;
+
 		ambiente.incrementa();
+
 		if (atributos.checaTipo(ambiente)) {
 			// Não vai precisar checar tipo dos identificadores
 			ambiente.mapTipo(new Id("this"), new TipoClasse(nomeClasse));

@@ -1,6 +1,6 @@
 package plp.puma.memoria;
 
-import plp.puma.declaracao.classe.ListaId;
+import plp.puma.declaracao.classe.ListaConstanteEnum;
 import plp.puma.declaracao.procedimento.DecProcedimento;
 import plp.puma.declaracao.variavel.DecVariavel;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
@@ -13,9 +13,9 @@ import plp.puma.expressao.leftExpression.Id;
 public class DefEnum extends DefClasse {
 
 	/**
-	 * Declaração de Identificadores
+	 * Declaração de Constantes e respectivas variáveis
 	 */
-	private ListaId listaId;
+	private ListaConstanteEnum listaConstanteEnum;
 
 	/**
 	 * Construtor
@@ -27,11 +27,12 @@ public class DefEnum extends DefClasse {
 	 * @param decProcedimento
 	 *            Declaraçao dos Procedimentos.
 	 */
-	public DefEnum(ListaId listaId, DecVariavel decVariavel,
+	public DefEnum(ListaConstanteEnum listaConstanteEnum, DecVariavel decVariavel,
 			DecProcedimento decProcedimento) {
 		super(decVariavel, decProcedimento);
-		this.listaId = listaId;
+		this.listaConstanteEnum = listaConstanteEnum;
 	}
+	
 
 	/**
 	 * O método abaixo deve verificar se existe algum atributo, identificado por
@@ -43,6 +44,6 @@ public class DefEnum extends DefClasse {
 	 *            O tipo do atributo do identificador.
 	 */
 	public boolean existeId(Id id) throws VariavelNaoDeclaradaException {
-		return listaId.existeId(id);
+		return listaConstanteEnum.existeId(id);
 	}
 }
