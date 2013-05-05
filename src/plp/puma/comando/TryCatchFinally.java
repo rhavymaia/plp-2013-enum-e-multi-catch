@@ -18,9 +18,9 @@ import plp.puma.util.Tipo;
 import plp.puma.util.TipoPrimitivo;
 
 /**
- * Classe que representa um comando TryCatch.
+ * Classe que representa um comando TryCatchFinally.
  */
-public class TryCatch implements Comando {
+public class TryCatchFinally implements Comando {
 
 	private Tipo tipoExcecao;
 
@@ -34,26 +34,32 @@ public class TryCatch implements Comando {
 	 */
 	private Comando comandoCatch;
 
+	/**
+	 * Comando do corpo do finally.
+	 */
+	private Comando comandoFinally;
+
 	private Id mensagem;
 
 	/**
 	 * Construtor.
 	 */
-	public TryCatch(Tipo tipoExcecao, Comando comandoTry, Comando comandoCatch,
-			Id id) {
+	public TryCatchFinally(Tipo tipoExcecao, Comando comandoTry, Comando comandoCatch,
+			Comando comandoFinally, Id id) {
 		this.tipoExcecao = tipoExcecao;
 		this.comandoTry = comandoTry;
 		this.comandoCatch = comandoCatch;
+		this.comandoFinally = comandoFinally;
 		this.mensagem = id;
 	}
 
 	/**
-	 * Implementa o comando <code>TryCatch</code>.
+	 * Implementa o comando <code>TryCatchFinally</code>.
 	 * 
 	 * @param ambiente
 	 *            o ambiente de execução.
 	 * @return o ambiente depois de modificado pela execução do comando
-	 *         <code>TryCatch</code>.
+	 *         <code>TryCatchFinally</code>.
 	 */
 	public AmbienteExecucao executar(AmbienteExecucao ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
@@ -87,6 +93,7 @@ public class TryCatch implements Comando {
 						new ValorString(e.getMessage()));
 			ambiente = comandoCatch.executar(ambiente);
 		} finally {
+			ambiente = comandoFinally.executar(ambiente);
 			ambiente.restaura();
 		}
 		return ambiente;
@@ -94,7 +101,7 @@ public class TryCatch implements Comando {
 
 	/**
 	 * Realiza a verificacao de tipos da expressão e dos comandos do comando
-	 * <code>TryCatch</code>
+	 * <code>TryCatchFinally</code>
 	 * 
 	 * @param ambiente
 	 *            o ambiente de compilação.
@@ -113,9 +120,10 @@ public class TryCatch implements Comando {
 		if (this.mensagem != null)
 			ambiente.mapTipo(this.mensagem.getId(), TipoPrimitivo.TIPO_STRING);
 		boolean validaCatch = this.comandoCatch.checaTipo(ambiente);
+		boolean validaFinally = this.comandoFinally.checaTipo(ambiente);
 		ambiente.restaura();
 
-		return validaTry && validaCatch;
+		return validaTry && validaCatch && validaFinally;
 	}
 
 }

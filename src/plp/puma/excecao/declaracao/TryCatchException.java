@@ -9,6 +9,6 @@ package plp.puma.excecao.declaracao;
 public class TryCatchException extends Exception {
 
 	public TryCatchException(String e) {
-		super("Exceção: " + e);
+		super(e);
 	}
 }
