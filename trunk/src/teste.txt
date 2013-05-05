@@ -1,10 +1,16 @@
  {
+ 	classe Contador {
+          int valor = 1;
+          proc print() {
+            write(this.valor)
+          }
+ 	},
  	enum Enumerado {
  		A, B, C, D;
  		int valor = 2;
  		proc print() {
  			write("print")
-		}		
+		}
 	};
 	{
 		Enumerado e := Enumerado.C,
@@ -14,9 +20,12 @@
     	//write("Valor do Enum: " ++ e);
 	    
 	    try { 
-	    	throw "erro!"
+	    	throw new VariavelNaoDeclaradaException("msg")
     	}
 	    catch (VariavelNaoDeclaradaException e) {	
+	    	write(e) 
+    	}
+    	catch (VariavelJaDeclaradaException e) {	
 	    	write(e) 
     	}
     	finally {

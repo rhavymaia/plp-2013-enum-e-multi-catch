@@ -378,8 +378,12 @@ Comando PComandoSimples() :
     		retorno = PSkip()
       | LOOKAHEAD(<LBRACE>)
       		retorno = PComDeclaracao()
-	  | LOOKAHEAD(<TRY>)
+	  | LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> ( <CATCH> <LPAREN> PTipo() PId() <RPAREN> <LBRACE> PComando() <RBRACE> )+ <FINALLY>)
+			retorno = PTryCatchFinally()
+      | LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> <CATCH>)
 			retorno = PTryCatch()
+      | LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> <FINALLY>)
+			retorno = PTryFinally()
 	  | LOOKAHEAD(<THROW>)
             retorno = PThrow()
       | LOOKAHEAD(<WHILE>)
@@ -451,11 +455,10 @@ While PWhile() :
 }
 
 /**
- * TryCatch ::= "try {" Comando "}catch(" id "){" Comando "}"
+ * TryCatchFinally ::= "try {" Comando "} catch {" Comando "} finally {" Comando "}"
  **/
-TryCatch PTryCatch() :
+TryCatchFinally PTryCatchFinally() :
 {
-	TryCatch resposta;
   	Tipo tipoExcecao;
 	Id id;
 	Comando comandoTry;
@@ -463,62 +466,78 @@ TryCatch PTryCatch() :
 	Comando comandoFinally;
 }
 {
-	(
-	  	LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> <CATCH> <LPAREN> PTipo() PId() <RPAREN> <LBRACE> PComando() <RBRACE> <FINALLY>)
-		(
-			<TRY> <LBRACE>
-				comandoTry = PComando()
-			<RBRACE>
-			<CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
-			    comandoCatch = PComando()
-			<RBRACE>
-			<FINALLY> <LBRACE>
-			    comandoFinally = PComando()
-			<RBRACE>
-			{
-				resposta = new TryCatch(tipoExcecao, comandoTry, comandoCatch, comandoFinally, id);
-			}		)
-		|
-		LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> <FINALLY>)
-		(
-			<TRY> <LBRACE>
-				comandoTry = PComando()
-			<RBRACE>
-			<FINALLY> <LBRACE>
-			    comandoFinally = PComando()
-			<RBRACE>
-			{
-				resposta = new TryCatch(null, comandoTry, new Skip(), comandoFinally, null);
-			}
-		)
-		|
-		(
-			<TRY> <LBRACE>
-				comandoTry = PComando()
-			<RBRACE>
-			<CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
-			    comandoCatch = PComando()
-			<RBRACE>
-			{
-				resposta = new TryCatch(tipoExcecao, comandoTry, comandoCatch, new Skip(), id);
-			}
-		)
-	)
+	<TRY> <LBRACE>
+		comandoTry = PComando()
+	<RBRACE>
+	(	  	<CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
+		    comandoCatch = PComando()
+		<RBRACE>
+	)+
+	<FINALLY> <LBRACE>
+	    comandoFinally = PComando()
+	<RBRACE>
 	{
-	  return resposta;	} 
+		return new TryCatchFinally(tipoExcecao, comandoTry, comandoCatch, comandoFinally, id);
+	}
 }
 
 /**
- * Throw ::= "throw" messagem
+ * TryCatch ::= "try {" Comando "} catch {" Comando "}"
+ **/
+TryCatch PTryCatch() :
+{
+  	Tipo tipoExcecao;
+	Id id;
+	Comando comandoTry;
+	Comando comandoCatch;
+}
+{
+	<TRY> <LBRACE>
+		comandoTry = PComando()
+	<RBRACE>
+	(	  <CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
+		    comandoCatch = PComando()
+		<RBRACE>
+	)+
+	{
+		return new TryCatch(tipoExcecao, comandoTry, comandoCatch, id);
+	}
+}
+
+/**
+ * TryFinally ::= "try {" Comando "} finally {" Comando "}"
+ **/
+TryFinally PTryFinally() :
+{
+  	Tipo tipoExcecao;
+	Id id;
+	Comando comandoTry;
+	Comando comandoFinally;
+}
+{
+	<TRY> <LBRACE>
+		comandoTry = PComando()
+	<RBRACE>
+	<FINALLY> <LBRACE>
+	    comandoFinally = PComando()
+	<RBRACE>
+	{
+		return new TryFinally(null, comandoTry, comandoFinally, null);
+	}
+}
+
+/**
+ * Throw ::= "throw" "new" Tipo "(" Valor ")"
  **/
 Throw PThrow() :
 {
+	Tipo tipoExcecao;
 	Valor mensagem;
 }
 {
-	<THROW> mensagem = PValorString()
+	<THROW> <NEW> tipoExcecao = PTipo() <LPAREN> mensagem = PValor() <RPAREN>
 	{
-		return new Throw( ((ValorString)mensagem).valor());
+		return new Throw(tipoExcecao, mensagem);
 	}
 }
 

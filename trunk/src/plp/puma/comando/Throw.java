@@ -1,14 +1,21 @@
 package plp.puma.comando;
 
+import java.lang.reflect.Constructor;
+
 import plp.puma.excecao.declaracao.TryCatchException;
+import plp.puma.expressao.leftExpression.Id;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
+import plp.puma.util.Tipo;
 
 public class Throw implements Comando {
 
-	private String mensagem;
-
-	public Throw(String mensagem) {
+	private Tipo tipoExcecao;
+	private Valor mensagem;
+	
+	public Throw(Tipo tipoExcecao, Valor mensagem) {
+		this.tipoExcecao = tipoExcecao;
 		this.mensagem = mensagem;
 	}
 
@@ -21,7 +28,17 @@ public class Throw implements Comando {
 	 */
 	public AmbienteExecucao executar(AmbienteExecucao ambiente)
 			throws TryCatchException {
-		throw new TryCatchException(mensagem);
+		try {
+			Class classDefinition = Class.forName("plp.puma.excecao.declaracao." + tipoExcecao.getTipo().toString()); 
+			Constructor cons = classDefinition.getConstructor(Id.class);
+			Exception ex = (Exception) cons.newInstance(new Id(mensagem.toString()));
+			
+			throw ex;
+		} catch (ClassNotFoundException e){
+			throw new TryCatchException("Classe " + tipoExcecao.getTipo().toString() + " não é um tipo de exceção!");
+		} catch (Exception e) {
+			throw new TryCatchException(e.getMessage());
+		}
 	}
 
 	/**
