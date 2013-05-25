@@ -30,5 +30,8 @@
 	    	write("catch 2");
 	    	write(e2)
     	}
+    	finally {
+    		write("finally")
+    	}
 	}
 }

@@ -24,13 +24,9 @@ import plp.puma.util.TipoPrimitivo;
  */
 public class TryCatch implements Comando {
 
+	private Comando comandoTry;
 	private ListaCatch listaCatch;
 
-	private Comando comandoTry;
-
-	/**
-	 * Construtor.
-	 */
 	public TryCatch(Comando comandoTry, ListaCatch listaCatch) {
 		this.listaCatch = listaCatch;
 		this.comandoTry = comandoTry;
@@ -88,14 +84,7 @@ public class TryCatch implements Comando {
 
 		boolean validaTry = this.comandoTry.checaTipo(ambiente);
 
-		ambiente.incrementa();
-		/*if (this.mensagem != null)
-			ambiente.mapTipo(this.mensagem.getId(), TipoPrimitivo.TIPO_STRING);
-		boolean validaCatch = this.comandoCatch.checaTipo(ambiente);
-		ambiente.restaura();*/
-
-		//return validaTry && validaCatch;
-		return true;
+		return validaTry;
 	}
 
 }

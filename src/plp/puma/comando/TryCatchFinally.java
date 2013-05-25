@@ -1,5 +1,6 @@
 package plp.puma.comando;
 
+import plp.puma.declaracao.tipo.ListaCatch;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ObjetoJaDeclaradoException;
@@ -22,35 +23,14 @@ import plp.puma.util.TipoPrimitivo;
  */
 public class TryCatchFinally implements Comando {
 
-	private Tipo tipoExcecao;
-
-	/**
-	 * Comando do corpo do try.
-	 */
 	private Comando comandoTry;
-
-	/**
-	 * Comando do corpo do catch.
-	 */
-	private Comando comandoCatch;
-
-	/**
-	 * Comando do corpo do finally.
-	 */
 	private Comando comandoFinally;
+	private ListaCatch listaCatch;
 
-	private Id mensagem;
-
-	/**
-	 * Construtor.
-	 */
-	public TryCatchFinally(Tipo tipoExcecao, Comando comandoTry, Comando comandoCatch,
-			Comando comandoFinally, Id id) {
-		this.tipoExcecao = tipoExcecao;
+	public TryCatchFinally(Comando comandoTry, ListaCatch listaCatch, Comando comandoFinally) {
 		this.comandoTry = comandoTry;
-		this.comandoCatch = comandoCatch;
 		this.comandoFinally = comandoFinally;
-		this.mensagem = id;
+		this.listaCatch = listaCatch;
 	}
 
 	/**
@@ -70,28 +50,18 @@ public class TryCatchFinally implements Comando {
 			TryCatchException {
 
 		try {
-			// Criar escopo Try
 			ambiente.incrementa();
 			ambiente = comandoTry.executar(ambiente);
-
 		} catch (TryCatchException e) {
-			try {
-				Exception ex = (Exception) Exception.class.getConstructor(
-						tipoExcecao.getTipo().getClass()).newInstance(mensagem);
-				ambiente.mapValor(this.mensagem.getId(),
-						new ValorString(ex.getMessage()));
-			} catch (Exception e2) {
+			for (Catch c : listaCatch.getCatchs()) {
+				for (Tipo t : c.getTiposExcecao().getTipos()) {
+					if(e.getExceptionClass().getSimpleName().equals(t.getTipo().toString())){
+						ambiente.mapValor(c.getMensagem(), new ValorString(e.getMessage()));
+						c.getComandoCatch().executar(ambiente);
+						break;
+					}
+				}
 			}
-
-			// Destruir escopo try se houver excecao!
-			ambiente.restaura();
-
-			// Criar e destruir escopo do catch
-			ambiente.incrementa();
-			if (this.mensagem != null)
-				ambiente.mapValor(this.mensagem.getId(),
-						new ValorString(e.getMessage()));
-			ambiente = comandoCatch.executar(ambiente);
 		} finally {
 			ambiente = comandoFinally.executar(ambiente);
 			ambiente.restaura();
@@ -116,14 +86,7 @@ public class TryCatchFinally implements Comando {
 
 		boolean validaTry = this.comandoTry.checaTipo(ambiente);
 
-		ambiente.incrementa();
-		if (this.mensagem != null)
-			ambiente.mapTipo(this.mensagem.getId(), TipoPrimitivo.TIPO_STRING);
-		boolean validaCatch = this.comandoCatch.checaTipo(ambiente);
-		boolean validaFinally = this.comandoFinally.checaTipo(ambiente);
-		ambiente.restaura();
-
-		return validaTry && validaCatch && validaFinally;
+		return validaTry;
 	}
 
 }
