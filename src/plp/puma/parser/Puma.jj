@@ -19,12 +19,14 @@ import plp.puma.comando.*;
 import plp.puma.declaracao.classe.*;
 import plp.puma.declaracao.variavel.*;
 import plp.puma.declaracao.constante.*;
+import plp.puma.declaracao.tipo.*;
 import plp.puma.declaracao.*;
 import plp.puma.declaracao.procedimento.*;
 import plp.puma.memoria.*;
 import plp.puma.excecao.declaracao.*;
 import plp.puma.excecao.execucao.*;
 import plp.puma.memoria.colecao.*;
+
 /**
  * Parser para a Linguagem de Programação Orientada a Objetos
  */
@@ -95,8 +97,12 @@ public class PumaParser {
                 System.out.println("Erro de tipo na inicialização do ambiente.");
             }
         } catch (Exception e) {
-        	System.out.println("Puma PLP Parser Version 0.0.1:  Encountered errors during parse.");
-            e.printStackTrace();
+          	if(e.getClass().getPackage().getName().equals("plp.puma.excecao.declaracao"))
+          		new TryCatchException(e.getMessage(), e.getClass());
+      		else {
+	        	System.out.println("Puma PLP Parser Version 0.0.1:  Encountered errors during parse.");
+	            e.printStackTrace();
+        	}
         }
     }
 }
@@ -484,7 +490,7 @@ TryCatchFinally PTryCatchFinally() :
 /**
  * TryCatch ::= "try {" Comando "} catch {" Comando "}"
  **/
-TryCatch PTryCatch() :
+/*TryCatch PTryCatch() :
 {
   	Tipo tipoExcecao;
 	Id id;
@@ -495,14 +501,14 @@ TryCatch PTryCatch() :
 	<TRY> <LBRACE>
 		comandoTry = PComando()
 	<RBRACE>
-	(	  <CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
+	(	  	<CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
 		    comandoCatch = PComando()
 		<RBRACE>
 	)+
 	{
 		return new TryCatch(tipoExcecao, comandoTry, comandoCatch, id);
 	}
-}
+}*/
 
 /**
  * TryFinally ::= "try {" Comando "} finally {" Comando "}"
@@ -523,6 +529,24 @@ TryFinally PTryFinally() :
 	<RBRACE>
 	{
 		return new TryFinally(null, comandoTry, comandoFinally, null);
+	}
+}
+
+/**
+ * TryCatch ::= "try {" Comando "} catch {" Comando "}"
+ **/
+TryCatch PTryCatch() :
+{
+  	ListaCatch listaCatch;
+	Comando comandoTry;
+}
+{
+	<TRY> <LBRACE>
+		comandoTry = PComando()
+	<RBRACE>
+  	listaCatch = PListaCatch()
+	{
+		return new TryCatch(comandoTry, listaCatch);
 	}
 }
 
@@ -1287,21 +1311,100 @@ DecEnum PDecEnumAtomica():
 }
 
 /**
+ * ListaTipo ::=  Tipo | Tipo "," Tipo
+ */
+ListaTipoExcecao PListaTipoExcecao() :
+{
+  ListaTipoExcecao retorno;
+  Tipo tipo;
+}
+{
+  (
+    LOOKAHEAD(PTipo() <BIT_OR>)
+    	retorno = PListaTipoExcecaoComposto()
+  	| tipo = PTipo()
+	{
+	   return new ListaTipoExcecao(tipo);
+	}
+  ) 
+  {
+    return retorno;
+  }
+}
+
+/**
+ * ... Tipo "," Tipo
+ */
+ListaTipoExcecao PListaTipoExcecaoComposto():
+{
+  ListaTipoExcecao tipos;
+  Tipo tipo;
+}
+{
+  tipo = PTipo() <BIT_OR> tipos = PListaTipoExcecao()
+  {
+    return new ListaTipoExcecao(tipo, tipos);
+  }
+}
+
+/**
+ * 
+ */
+ListaCatch PListaCatch() :
+{
+  ListaCatch catchs;
+  Catch c;
+}
+{
+  (
+    LOOKAHEAD(<CATCH> <LPAREN> PListaTipoExcecao() PId() <RPAREN> <LBRACE> PComando() <RBRACE> <CATCH>)
+    	catchs = PListaCatchComposto()
+  	| c = PCatch()
+	{
+	   return new ListaCatch(c);
+	}	  
+  ) 
+  {
+    return catchs;
+  }
+}
+
+/**
+ * 
+ */
+ListaCatch PListaCatchComposto():
+{
+  ListaCatch catchs;
+  Catch c;
+}
+{
+  c = PCatch() catchs = PListaCatch()
+  {
+    return new ListaCatch(c, catchs);
+  }
+}
+
+/**
  * ListaConstanteEnum ::=  ConstanteEnum | ConstanteEnum "," ListaConstanteEnum
  */
 ListaConstanteEnum PListaConstantesEnum() :
 {
   ListaConstanteEnum retorno;
-  ConstanteEnum constanteEnum;}
+  ConstanteEnum constanteEnum;
+}
 {
-  (    LOOKAHEAD(PConstanteEnum() <COMMA>)
+  (
+    LOOKAHEAD(PConstanteEnum() <COMMA>)
     	retorno = PListaConstantesEnumComposto()
   	| constanteEnum = PConstanteEnum()
 	{
-	   return new ListaConstanteEnum(constanteEnum);	}	  
+	   return new ListaConstanteEnum(constanteEnum);
+	}	  
   ) 
   {      
-    return retorno;  }}
+    return retorno;
+  }
+}
 
 /**
  * ... ConstanteEnum "," ListaConstanteEnum
@@ -1551,6 +1654,26 @@ DecParametro PDecParametroAtomico():
 		return new DecParametro(id, tipo);
 	}
 
+}
+
+/**
+ * 
+ **/
+Catch PCatch():
+{
+  	ListaTipoExcecao tiposExcecao;
+	Comando comandoCatch;
+	Id id;
+}
+{
+	(
+		<CATCH> <LPAREN> tiposExcecao = PListaTipoExcecao() id = PId() <RPAREN> <LBRACE>
+		    comandoCatch = PComando()
+		<RBRACE>
+	)
+	{
+		return new Catch(tiposExcecao, comandoCatch, id);
+	}
 }
 
 /**

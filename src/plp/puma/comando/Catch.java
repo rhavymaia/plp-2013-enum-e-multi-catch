@@ -1,6 +1,5 @@
 package plp.puma.comando;
 
-import plp.puma.declaracao.tipo.ListaCatch;
 import plp.puma.declaracao.tipo.ListaTipoExcecao;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
@@ -22,18 +21,21 @@ import plp.puma.util.TipoPrimitivo;
 /**
  * Classe que representa um comando TryCatch.
  */
-public class TryCatch implements Comando {
+public class Catch implements Comando {
 
-	private ListaCatch listaCatch;
+	private ListaTipoExcecao tiposExcecao;
 
-	private Comando comandoTry;
+	private Comando comandoCatch;
+
+	private Id mensagem;
 
 	/**
 	 * Construtor.
 	 */
-	public TryCatch(Comando comandoTry, ListaCatch listaCatch) {
-		this.listaCatch = listaCatch;
-		this.comandoTry = comandoTry;
+	public Catch(ListaTipoExcecao tiposExcecao, Comando comandoCatch, Id id) {
+		this.tiposExcecao = tiposExcecao;
+		this.comandoCatch = comandoCatch;
+		this.mensagem = id;
 	}
 
 	/**
@@ -51,24 +53,8 @@ public class TryCatch implements Comando {
 			ObjetoNaoDeclaradoException, ClasseJaDeclaradaException,
 			ClasseNaoDeclaradaException, EntradaInvalidaException,
 			TryCatchException {
-				
-		try {
-			ambiente.incrementa();
-			ambiente = comandoTry.executar(ambiente);
-		} catch (TryCatchException e) {
-			for (Catch c : listaCatch.getCatchs()) {
-				for (Tipo t : c.getTiposExcecao().getTipos()) {
-					if(e.getExceptionClass().getSimpleName().equals(t.getTipo().toString())){
-						ambiente.mapValor(c.getMensagem(), new ValorString(e.getMessage()));
-						c.getComandoCatch().executar(ambiente);
-						break;
-					}
-				}
-			}
-		} finally {
-			ambiente.restaura();
-		}
-		return ambiente;
+
+		return null;
 	}
 
 	/**
@@ -86,16 +72,18 @@ public class TryCatch implements Comando {
 			ProcedimentoJaDeclaradoException, ClasseNaoDeclaradaException,
 			ClasseJaDeclaradaException {
 
-		boolean validaTry = this.comandoTry.checaTipo(ambiente);
-
-		ambiente.incrementa();
-		/*if (this.mensagem != null)
-			ambiente.mapTipo(this.mensagem.getId(), TipoPrimitivo.TIPO_STRING);
-		boolean validaCatch = this.comandoCatch.checaTipo(ambiente);
-		ambiente.restaura();*/
-
-		//return validaTry && validaCatch;
 		return true;
 	}
 
+	public ListaTipoExcecao getTiposExcecao() {
+		return tiposExcecao;
+	}
+
+	public Comando getComandoCatch() {
+		return comandoCatch;
+	}
+
+	public Id getMensagem() {
+		return mensagem;
+	}
 }
