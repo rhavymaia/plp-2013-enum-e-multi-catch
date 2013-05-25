@@ -22,14 +22,13 @@
 	    try { 
 	    	throw new VariavelNaoDeclaradaException("msg")
     	}
-	    catch (VariavelNaoDeclaradaException e) {	
-	    	write(e) 
+	    catch (VariavelJaDeclaradaException | VariavelNaoDeclaradaException e1) {	
+	    	write("catch 1");
+	    	write(e1)
     	}
-    	catch (VariavelJaDeclaradaException e) {	
-	    	write(e) 
-    	}
-    	finally {
-    		write("finally!")
+	    catch (ProcedimentoJaDeclaradoException | ProcedimentoNaoDeclaradoException e2) {	
+	    	write("catch 2");
+	    	write(e2)
     	}
 	}
 }

@@ -35,9 +35,9 @@ public class Throw implements Comando {
 			
 			throw ex;
 		} catch (ClassNotFoundException e){
-			throw new TryCatchException("Classe " + tipoExcecao.getTipo().toString() + " não é um tipo de exceção!");
+			throw new TryCatchException("Classe " + tipoExcecao.getTipo().toString() + " não é um tipo de exceção!", null);
 		} catch (Exception e) {
-			throw new TryCatchException(e.getMessage());
+			throw new TryCatchException(e.getMessage(), e.getClass());
 		}
 	}
 

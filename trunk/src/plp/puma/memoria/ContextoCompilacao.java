@@ -8,6 +8,7 @@ import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ProcedimentoJaDeclaradoException;
 import plp.puma.excecao.declaracao.ProcedimentoNaoDeclaradoException;
+import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.expressao.leftExpression.Id;
