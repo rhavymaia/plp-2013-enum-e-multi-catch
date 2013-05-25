@@ -384,7 +384,7 @@ Comando PComandoSimples() :
     		retorno = PSkip()
       | LOOKAHEAD(<LBRACE>)
       		retorno = PComDeclaracao()
-	  | LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> ( <CATCH> <LPAREN> PTipo() PId() <RPAREN> <LBRACE> PComando() <RBRACE> )+ <FINALLY>)
+	  | LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> PListaCatch() <FINALLY>)
 			retorno = PTryCatchFinally()
       | LOOKAHEAD(<TRY> <LBRACE> PComando() <RBRACE> <CATCH>)
 			retorno = PTryCatch()
@@ -465,50 +465,40 @@ While PWhile() :
  **/
 TryCatchFinally PTryCatchFinally() :
 {
-  	Tipo tipoExcecao;
-	Id id;
 	Comando comandoTry;
-	Comando comandoCatch;
 	Comando comandoFinally;
+  	ListaCatch listaCatch;
 }
 {
 	<TRY> <LBRACE>
 		comandoTry = PComando()
 	<RBRACE>
-	(	  	<CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
-		    comandoCatch = PComando()
-		<RBRACE>
-	)+
+	listaCatch = PListaCatch()
 	<FINALLY> <LBRACE>
 	    comandoFinally = PComando()
 	<RBRACE>
 	{
-		return new TryCatchFinally(tipoExcecao, comandoTry, comandoCatch, comandoFinally, id);
+		return new TryCatchFinally(comandoTry, listaCatch, comandoFinally);
 	}
 }
 
 /**
  * TryCatch ::= "try {" Comando "} catch {" Comando "}"
  **/
-/*TryCatch PTryCatch() :
+TryCatch PTryCatch() :
 {
-  	Tipo tipoExcecao;
-	Id id;
+  	ListaCatch listaCatch;
 	Comando comandoTry;
-	Comando comandoCatch;
 }
 {
 	<TRY> <LBRACE>
 		comandoTry = PComando()
 	<RBRACE>
-	(	  	<CATCH> <LPAREN> tipoExcecao = PTipo() id = PId() <RPAREN> <LBRACE>
-		    comandoCatch = PComando()
-		<RBRACE>
-	)+
+  	listaCatch = PListaCatch()
 	{
-		return new TryCatch(tipoExcecao, comandoTry, comandoCatch, id);
+		return new TryCatch(comandoTry, listaCatch);
 	}
-}*/
+}
 
 /**
  * TryFinally ::= "try {" Comando "} finally {" Comando "}"
@@ -529,24 +519,6 @@ TryFinally PTryFinally() :
 	<RBRACE>
 	{
 		return new TryFinally(null, comandoTry, comandoFinally, null);
-	}
-}
-
-/**
- * TryCatch ::= "try {" Comando "} catch {" Comando "}"
- **/
-TryCatch PTryCatch() :
-{
-  	ListaCatch listaCatch;
-	Comando comandoTry;
-}
-{
-	<TRY> <LBRACE>
-		comandoTry = PComando()
-	<RBRACE>
-  	listaCatch = PListaCatch()
-	{
-		return new TryCatch(comandoTry, listaCatch);
 	}
 }
 
