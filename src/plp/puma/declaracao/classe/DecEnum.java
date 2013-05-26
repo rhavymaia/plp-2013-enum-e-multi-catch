@@ -1,5 +1,6 @@
 package plp.puma.declaracao.classe;
 
+import plp.puma.declaracao.constante.DecConstanteEnum;
 import plp.puma.declaracao.procedimento.DecProcedimento;
 import plp.puma.declaracao.variavel.DecVariavel;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
@@ -22,12 +23,12 @@ public class DecEnum extends DecClasseSimples {
 	/**
 	 * Lista de Identificadors
 	 */
-	private ListaConstanteEnum listaConstanteEnum;
+	private DecConstanteEnum decConstanteEnum;
 
-	public DecEnum(Id nomeClasse, ListaConstanteEnum listaConstanteEnum,
+	public DecEnum(Id nomeClasse, DecConstanteEnum decConstanteEnum,
 			DecVariavel atributos, DecProcedimento metodos) {
 		super(nomeClasse, atributos, metodos);
-		this.listaConstanteEnum = listaConstanteEnum;
+		this.decConstanteEnum = decConstanteEnum;
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class DecEnum extends DecClasseSimples {
 	public AmbienteExecucao elabora(AmbienteExecucao ambiente)
 			throws ClasseJaDeclaradaException, ClasseNaoDeclaradaException {
 		
-		ambiente.mapDefClasse(nomeClasse, new DefEnum(listaConstanteEnum, atributos,
+		ambiente.mapDefClasse(nomeClasse, new DefEnum(decConstanteEnum, atributos,
 				metodos));
 		return ambiente;
 	}
@@ -69,7 +70,7 @@ public class DecEnum extends DecClasseSimples {
 			ClasseJaDeclaradaException, ClasseNaoDeclaradaException,
 			ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException {
 
-		ambiente.mapDefClasse(nomeClasse, new DefEnum(listaConstanteEnum, atributos,
+		ambiente.mapDefClasse(nomeClasse, new DefEnum(decConstanteEnum, atributos,
 				metodos));
 
 		boolean resposta = false;

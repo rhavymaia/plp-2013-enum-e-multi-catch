@@ -1,6 +1,6 @@
 package plp.puma.memoria;
 
-import plp.puma.declaracao.classe.ListaConstanteEnum;
+import plp.puma.declaracao.constante.DecConstanteEnum;
 import plp.puma.declaracao.procedimento.DecProcedimento;
 import plp.puma.declaracao.variavel.DecVariavel;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
@@ -15,7 +15,7 @@ public class DefEnum extends DefClasse {
 	/**
 	 * Declaração de Constantes e respectivas variáveis
 	 */
-	private ListaConstanteEnum listaConstanteEnum;
+	private DecConstanteEnum decConstanteEnum;
 
 	/**
 	 * Construtor
@@ -27,10 +27,10 @@ public class DefEnum extends DefClasse {
 	 * @param decProcedimento
 	 *            Declaraçao dos Procedimentos.
 	 */
-	public DefEnum(ListaConstanteEnum listaConstanteEnum, DecVariavel decVariavel,
+	public DefEnum(DecConstanteEnum constanteEnum, DecVariavel decVariavel,
 			DecProcedimento decProcedimento) {
 		super(decVariavel, decProcedimento);
-		this.listaConstanteEnum = listaConstanteEnum;
+		this.decConstanteEnum = constanteEnum;
 	}
 	
 
@@ -44,6 +44,16 @@ public class DefEnum extends DefClasse {
 	 *            O tipo do atributo do identificador.
 	 */
 	public boolean existeId(Id id) throws VariavelNaoDeclaradaException {
-		return listaConstanteEnum.existeId(id);
+		return decConstanteEnum.existeId(id);
+	}
+
+
+	public DecConstanteEnum getDecConstanteEnum() {
+		return decConstanteEnum;
+	}
+
+
+	public void setDecConstanteEnum(DecConstanteEnum decConstanteEnum) {
+		this.decConstanteEnum = decConstanteEnum;
 	}
 }
