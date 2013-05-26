@@ -106,7 +106,9 @@ public class Atribuicao implements Comando {
 		// se for acesso a atributo, tem de alterar o ambiente do objeto!
 		Expressao expAV = acessoAtributo.getExpressaoObjeto();
 		// Pegando o objeto no ambiente
-		ValorRef referencia = (ValorRef) expAV.avaliar(ambiente);
+		Valor valor = expAV.avaliar(ambiente);
+		ValorRef referencia = (ValorRef) valor;
+		
 		Objeto obj = ambiente.getObjeto(referencia);
 		// recuperando o ambiente do objeto
 		AmbienteExecucao aux = obj.getEstado();
