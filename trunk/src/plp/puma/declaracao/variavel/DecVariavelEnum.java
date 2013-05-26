@@ -1,19 +1,20 @@
 package plp.puma.declaracao.variavel;
 
+import plp.puma.comando.New;
+import plp.puma.declaracao.constante.SimplesDecConstanteEnum;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
+import plp.puma.excecao.declaracao.ConstanteEnumNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ObjetoJaDeclaradoException;
 import plp.puma.excecao.declaracao.ObjetoNaoDeclaradoException;
 import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.expressao.leftExpression.Id;
-import plp.puma.expressao.valor.ValorEnum;
+import plp.puma.expressao.valor.ValorNull;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
-import plp.puma.memoria.ContextoExecucao;
-import plp.puma.memoria.DefClasse;
-import plp.puma.memoria.Objeto;
+import plp.puma.memoria.DefEnum;
 import plp.puma.util.Tipo;
 import plp.puma.util.TipoClasse;
 
@@ -65,25 +66,41 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 	 *            valores.
 	 * @return o ambiente modificado pela inicialização da variável.
 	 */
+	//TODO: Verificar alocação na memória: DecConstanteEnum e atualização de variáveis
 	public AmbienteExecucao elabora(AmbienteExecucao ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ClasseJaDeclaradaException, ClasseNaoDeclaradaException,
 			ObjetoJaDeclaradoException, ObjetoNaoDeclaradoException,
 			TryCatchException {
-		// Cria o ambiente para armazenar os atributos do tipo Enum
-		DefClasse defClasse = ambiente.getDefClasse(tipoInstancia.getTipo());
-		DecVariavel decVariavel = defClasse.getDecVariavel();
-		AmbienteExecucao aux = decVariavel.elabora(new ContextoExecucao(
-				ambiente));
-		Objeto obj = new Objeto(tipoInstancia.getTipo(),
-				aux.getContextoIdValor());
-
+		
+		// Cria o ambiente para armazenar os atributos do tipo Enum		
+		Id tipoEnum = tipoInstancia.getTipo();	
+		
+		// Recuperar a definição do enumerador.
+		DefEnum defEnum = (DefEnum) ambiente.getDefClasse(tipoEnum);
+		
+		SimplesDecConstanteEnum constanteEnum = null;
+		
+		try {
+			constanteEnum = defEnum.getDecConstanteEnum().getConstanteEnum(valor);
+		} catch (ConstanteEnumNaoDeclaradaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// Cria o ValorEnum contendo o valor instanciado e o Objeto contendo o
 		// ambiente com os atributos
-		AmbienteExecucao aux2 = new SimplesDecVariavel(tipo, objeto,
-				new ValorEnum(valor, obj)).elabora(ambiente);
-		// aux = new New(objeto, new TipoClasse(classe)).executar(aux);
-		return aux2;
+		Tipo tipoInstanciaReal = tipoInstancia;
+		
+		SimplesDecVariavel decVariavel = new SimplesDecVariavel(tipoInstanciaReal, objeto,
+				new ValorNull());
+		AmbienteExecucao aux = decVariavel.elabora(ambiente);
+		constanteEnum.elabora(ambiente);
+		
+		New newObjeto = new New(objeto, tipoInstanciaReal);
+		aux = newObjeto.executar(aux);
+		
+		return aux;
 	}
 
 	/**

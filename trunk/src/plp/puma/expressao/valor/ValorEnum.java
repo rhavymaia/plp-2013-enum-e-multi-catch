@@ -1,5 +1,7 @@
 package plp.puma.expressao.valor;
 
+import plp.imperative1.util.Lista;
+import plp.puma.declaracao.variavel.SimplesDecVariavel;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.expressao.leftExpression.Id;
@@ -15,7 +17,13 @@ import plp.puma.util.TipoClasse;
  */
 public class ValorEnum extends ValorConcreto {
 
+	// Constante
 	private Id valor;
+	
+	// Lista de variáveis das constantes
+	private Lista<SimplesDecVariavel> variaveis;
+	
+	// Comandos
 	private Objeto objeto;
 
 	/**
