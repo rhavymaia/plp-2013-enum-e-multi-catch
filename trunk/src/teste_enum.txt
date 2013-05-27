@@ -6,32 +6,34 @@
 		}
 	},
 	enum Planeta {
-		TERRA(1,2),
-		MERCURIO(3,4),
-		JUPITER(5,6),
-		MARTE(7,8);
+		TERRA(1,2,100),
+		MERCURIO(3,4,200),
+		JUPITER(5,6,300),
+		MARTE(7,8,400);
 		
 		int massa = 0,
 		int raio = 0,
+		int populacao = 0,
 		int temperatura = 0;
 		
-		proc Planeta(int massa, int raio) {
-			write("Massa: " ++ massa);
-			write("Raio: " ++ raio)
+		proc Planeta(int massa, int raio, int populacao) {
+			this.massa := massa;
+			this.raio:= raio;
+			this.populacao := populacao
 		}
 	};
 	
 	{
 		int alfa = 0,
 		Tempo tempo := new Tempo,
-		Planeta p := Planeta.MERCURIO;
+		Planeta p := Planeta.TERRA;
 		
-		tempo.ano := 2013;
-		p.massa := 20;
-		
-		p.Planeta(1,2);
-		
+		tempo.ano := 2013;		
 		write("Está no Ano: " ++ tempo.ano);
-		write("O seu peso é: " ++ p.massa)
+		
+		
+		write("O seu peso é: " ++ p.massa);
+		write("O raio é: " ++ p.raio);
+		write("Sua população é: " ++ p.populacao)
 	}
 }
