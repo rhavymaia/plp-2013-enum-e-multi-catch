@@ -1,9 +1,8 @@
 package plp.puma.expressao.valor;
 
-import plp.imperative1.util.Lista;
-import plp.puma.declaracao.variavel.SimplesDecVariavel;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
+import plp.puma.expressao.ListaExpressao;
 import plp.puma.expressao.leftExpression.Id;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
@@ -21,7 +20,7 @@ public class ValorEnum extends ValorConcreto {
 	private Id valor;
 	
 	// Lista de variáveis das constantes
-	private Lista<SimplesDecVariavel> variaveis;
+	private ListaExpressao variaveis;
 	
 	// Comandos
 	private Objeto objeto;
@@ -31,6 +30,15 @@ public class ValorEnum extends ValorConcreto {
 	 */
 	public ValorEnum(Id valor, Objeto objeto) {
 		this.valor = valor;
+		this.objeto = objeto;
+	}
+	
+	/**
+	 * cria um objeto encapsulando o String fornecido
+	 */
+	public ValorEnum(Id valor, ListaExpressao variaveis, Objeto objeto) {
+		this.valor = valor;
+		this.variaveis = variaveis;
 		this.objeto = objeto;
 	}
 
@@ -164,5 +172,13 @@ public class ValorEnum extends ValorConcreto {
 
 	public void setValor(Id valor) {
 		this.valor = valor;
+	}
+
+	public ListaExpressao getVariaveis() {
+		return variaveis;
+	}
+
+	public void setVariaveis(ListaExpressao variaveis) {
+		this.variaveis = variaveis;
 	}
 }

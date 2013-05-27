@@ -14,6 +14,7 @@ import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
+import plp.puma.expressao.ListaExpressao;
 import plp.puma.expressao.leftExpression.Id;
 import plp.puma.expressao.valor.ValorEnum;
 import plp.puma.expressao.valor.ValorNull;
@@ -73,14 +74,11 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 	 *            valores.
 	 * @return o ambiente modificado pela inicialização da variável.
 	 */
-	//TODO: Verificar alocação na memória: DecConstanteEnum e atualização de variáveis
 	public AmbienteExecucao elabora(AmbienteExecucao ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ClasseJaDeclaradaException, ClasseNaoDeclaradaException,
 			ObjetoJaDeclaradoException, ObjetoNaoDeclaradoException,
 			TryCatchException {
-
-		AmbienteExecucao contextoPrincipal = null;
 
 		// Cria o ambiente para armazenar os atributos do tipo Enum
 		Id tipoEnum = tipoInstancia.getTipo();
@@ -88,14 +86,13 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 		// Recuperar a definição do enumerador.
 		DefEnum defEnum = (DefEnum) ambiente.getDefClasse(tipoEnum);		
 
-		// Cria o ValorEnum contendo o valor instanciado e o Objeto contendo
-		// o ambiente com os atributos
+		// Tipo defenido para o enum.
 		Tipo tipoInstanciaReal = tipoInstancia;
 
 		// Inserir variáveis do Enumerador.
 		SimplesDecVariavel decVariavel = new SimplesDecVariavel(
 				tipoInstanciaReal, objeto, new ValorNull());
-		contextoPrincipal = decVariavel.elabora(ambiente);
+		AmbienteExecucao contextoPrincipal = decVariavel.elabora(ambiente);
 
 		// Recupera a constante definida na declaração..
 		SimplesDecConstanteEnum constanteEnum = defEnum.getDecConstanteEnum()
@@ -110,27 +107,25 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 		Objeto objetoInstacia = contextoPrincipal.getObjeto(
 				(ValorRef) contextoPrincipal.getValor(objeto.getId()));
 
-		ValorEnum valorEnum = new ValorEnum(valor, objetoInstacia);
+		ListaExpressao variaveis = constanteEnum.getExpressoes();
+		ValorEnum valorEnum = new ValorEnum(valor, variaveis, 
+				objetoInstacia);
 		
 		AmbienteExecucao contextoObjeto = new SimplesDecVariavel(tipo, objeto,
 				valorEnum).elabora(objetoInstacia.getEstado());
 
-		ChamadaMetodo chamada = new ChamadaMetodo(objeto, tipoEnum, constanteEnum.getExpressoes());
+		ChamadaMetodo chamada = new ChamadaMetodo(objeto, tipoEnum, variaveis);
 		try {
-			
 			chamada.executar(contextoPrincipal);
-			
 		} catch (ProcedimentoNaoDeclaradoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ProcedimentoJaDeclaradoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (EntradaInvalidaException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 		
+		contextoPrincipal.changeValor(objeto, valorEnum);
 		return contextoPrincipal;
 	}
 
