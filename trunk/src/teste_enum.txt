@@ -1,32 +1,37 @@
 {
- 	classe Contador {
-	      int valor = 1;
-	      
-		  proc Contador(string nome){
-			 write("Olá: " ++ nome)
-		  },
-		  proc print() {
-	        write(this.valor)
-	      }
+	classe Tempo {
+		int ano = 2012;
+		proc Tempo(string nome){
+		 write("Olá: " ++ nome)
+		}
 	},
-	enum Enumerado {
-	   	A(1,2), B(1,2), C(1,2), D(1,2);
-	   	int valor = 2;
-		proc print() {
-			write("print")
-		}		
-	};
-
-	{		
-		int alfa = 0,
-		Enumerado e := Enumerado.C,
-		Enumerado e2 := Enumerado.A,
-		Contador c := new Contador;
+	enum Planeta {
+		TERRA(1,2),
+		MERCURIO(3,4),
+		JUPITER(5,6),
+		MARTE(7,8);
 		
-		c.Contador("Rhavy");
-		alfa := 2;
-		e := e2;
-		e2 := e.B;
-		write("Valor do Enum: " ++ e ++  3 ++ alfa)
+		int massa = 0,
+		int raio = 0,
+		int temperatura = 0;
+		
+		proc Planeta(int massa, int raio) {
+			write("Massa: " ++ massa);
+			write("Raio: " ++ raio)
+		}
+	};
+	
+	{
+		int alfa = 0,
+		Tempo tempo := new Tempo,
+		Planeta p := Planeta.MERCURIO;
+		
+		tempo.ano := 2013;
+		p.massa := 20;
+		
+		p.Planeta(1,2);
+		
+		write("Está no Ano: " ++ tempo.ano);
+		write("O seu peso é: " ++ p.massa)
 	}
- }
+}
