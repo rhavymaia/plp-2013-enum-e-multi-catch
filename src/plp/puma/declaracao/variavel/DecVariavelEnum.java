@@ -1,5 +1,6 @@
 package plp.puma.declaracao.variavel;
 
+import plp.puma.comando.ChamadaMetodo;
 import plp.puma.comando.New;
 import plp.puma.declaracao.constante.SimplesDecConstanteEnum;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
@@ -7,9 +8,12 @@ import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ConstanteEnumNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ObjetoJaDeclaradoException;
 import plp.puma.excecao.declaracao.ObjetoNaoDeclaradoException;
+import plp.puma.excecao.declaracao.ProcedimentoJaDeclaradoException;
+import plp.puma.excecao.declaracao.ProcedimentoNaoDeclaradoException;
 import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
+import plp.puma.excecao.execucao.EntradaInvalidaException;
 import plp.puma.expressao.leftExpression.Id;
 import plp.puma.expressao.valor.ValorEnum;
 import plp.puma.expressao.valor.ValorNull;
@@ -111,6 +115,22 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 		AmbienteExecucao contextoObjeto = new SimplesDecVariavel(tipo, objeto,
 				valorEnum).elabora(objetoInstacia.getEstado());
 
+		ChamadaMetodo chamada = new ChamadaMetodo(objeto, tipoEnum, constanteEnum.getExpressoes());
+		try {
+			
+			chamada.executar(contextoPrincipal);
+			
+		} catch (ProcedimentoNaoDeclaradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ProcedimentoJaDeclaradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EntradaInvalidaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return contextoPrincipal;
 	}
 

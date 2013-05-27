@@ -68,8 +68,8 @@ public class SimplesDecConstanteEnum implements DecConstanteEnum {
 			ClasseJaDeclaradaException, ClasseNaoDeclaradaException,
 			ObjetoNaoDeclaradoException, ObjetoJaDeclaradoException,
 			TryCatchException {
-		ValorEnum valorEnum = new ValorEnum(idConstante, null);
-		ambiente.mapValor(idConstante, valorEnum);
+		/*ValorEnum valorEnum = new ValorEnum(idConstante, null);
+		ambiente.mapValor(idConstante, valorEnum);*/
 		return ambiente;
 	}
 
