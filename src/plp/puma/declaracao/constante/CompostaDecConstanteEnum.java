@@ -27,11 +27,11 @@ public class CompostaDecConstanteEnum implements DecConstanteEnum{
 	}
 
 	public SimplesDecConstanteEnum getConstanteEnum(Id idConstante)
-			throws ConstanteEnumNaoDeclaradaException {
+			throws VariavelNaoDeclaradaException {
 		SimplesDecConstanteEnum procedimento;
 		try {
 			procedimento = this.constante1.getConstanteEnum(idConstante);
-		} catch (ConstanteEnumNaoDeclaradaException e) {
+		} catch (VariavelNaoDeclaradaException e) {
 			procedimento = this.constante2.getConstanteEnum(idConstante);
 		}
 		return procedimento;

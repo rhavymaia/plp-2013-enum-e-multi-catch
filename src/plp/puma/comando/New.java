@@ -82,15 +82,24 @@ public class New implements Comando {
 			aux = decVariavel.elabora(new ContextoExecucao(ambiente));
 			ambiente.restaura();
 		} else {
+			
+			// Eleborar Variáveis.
 			decVariavel = defClasse.getDecVariavel();
 			aux = decVariavel.elabora(new ContextoExecucao(ambiente));
 		}
 
+		// Definir o objeto
 		Objeto objeto = new Objeto(tipoInstancia.getTipo(),
 				aux.getContextoIdValor());
-		ValorRef vr = ambiente.getProxRef();
-		ambiente.mapObjeto(vr, objeto);
-		ambiente = new Atribuicao(av, vr).executar(ambiente);
+		
+		// Criar a referência para objeto. Recuperar próximo Contador
+		// do Contexto de Execução.
+		ValorRef valorRef = ambiente.getProxRef();
+		ambiente.mapObjeto(valorRef, objeto);
+		
+		// Ligar variável a referência 
+		ambiente = new Atribuicao(av, valorRef).executar(ambiente);
+		
 		return ambiente;
 	}
 

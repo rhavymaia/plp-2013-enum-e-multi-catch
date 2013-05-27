@@ -2,7 +2,6 @@ package plp.puma.declaracao.constante;
 
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
-import plp.puma.excecao.declaracao.ConstanteEnumNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ObjetoJaDeclaradoException;
 import plp.puma.excecao.declaracao.ObjetoNaoDeclaradoException;
 import plp.puma.excecao.declaracao.TryCatchException;
@@ -47,11 +46,11 @@ public class SimplesDecConstanteEnum implements DecConstanteEnum {
 	 * Recuperar a constante e suas variáveis do Id passado como parâmetro.
 	 */
 	public SimplesDecConstanteEnum getConstanteEnum(Id idConstante)
-			throws ConstanteEnumNaoDeclaradaException {
+			throws VariavelNaoDeclaradaException {
 		if (this.getIdConstante().equals(idConstante)) {
 			return this;
 		} else {
-			throw new ConstanteEnumNaoDeclaradaException(idConstante);
+			throw new VariavelNaoDeclaradaException(idConstante);
 		}
 	}
 	
