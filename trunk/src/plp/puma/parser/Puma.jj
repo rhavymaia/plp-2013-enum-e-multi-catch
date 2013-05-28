@@ -1265,8 +1265,8 @@ DecClasseComposta PDecClasseComposta():
 
 /**
  * Novo formato
- * ... "enum" Id "{" ListaConstanteEnum ";" DecVariavel ";" DecProcedimento "}"
- * DecVariavelConstEnum := Atributos
+ * DecEnum ::= "enum" Id "{" DecConstanteEnum ";" DecVariavel ";" DecProcedimento "}"
+ * 
  **/
 DecEnum PDecEnumAtomica():
 {
@@ -1283,7 +1283,7 @@ DecEnum PDecEnumAtomica():
 }
 
 /**
- * ListaConstanteEnum ::=  ConstanteEnum | ConstanteEnum "," ListaConstanteEnum
+ * DecConstanteEnum ::=  DecConstanteEnum | DecConstanteEnum ","  DecConstanteEnum
  */
 DecConstanteEnum PDecConstantesEnum() :
 {
@@ -1304,7 +1304,7 @@ DecConstanteEnum PDecConstantesEnum() :
 }
 
 /**
- * ... ConstanteEnum "," ListaConstanteEnum
+ * ... SimplesDecConstanteEnum "," CompostaDecConstanteEnum
  */
 DecConstanteEnum PDecConstanteEnumComposto():
 {
@@ -1319,7 +1319,7 @@ DecConstanteEnum PDecConstanteEnumComposto():
 }
 
 /**
- * ConstanteEnum ::=  Id | Id "(" ListaExpressao ")"
+ * DecConstanteEnum ::=  Id | Id ("("")" | "(" ListaExpressao ")")
  */
 DecConstanteEnum PDecConstanteEnumAtomica() :
 {
