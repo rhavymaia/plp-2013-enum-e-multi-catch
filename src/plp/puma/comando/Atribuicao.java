@@ -11,6 +11,7 @@ import plp.puma.expressao.leftExpression.AcessoAtributoId;
 import plp.puma.expressao.leftExpression.Id;
 import plp.puma.expressao.leftExpression.LeftExpression;
 import plp.puma.expressao.valor.Valor;
+import plp.puma.expressao.valor.ValorEnum;
 import plp.puma.expressao.valor.ValorRef;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
@@ -107,9 +108,19 @@ public class Atribuicao implements Comando {
 		Expressao expAV = acessoAtributo.getExpressaoObjeto();
 		// Pegando o objeto no ambiente
 		Valor valor = expAV.avaliar(ambiente);
-		ValorRef referencia = (ValorRef) valor;
 		
-		Objeto obj = ambiente.getObjeto(referencia);
+		Objeto obj = null;
+		
+		// Verificação para acesso do objeto do valor
+		if (valor instanceof ValorEnum) {
+			
+			// Acesso do objeto instanciado da Enum.
+			obj = ((ValorEnum) valor).getObjeto();
+		} else {
+			ValorRef referencia = (ValorRef) valor;
+			obj = ambiente.getObjeto(referencia);
+		}	
+		
 		// recuperando o ambiente do objeto
 		AmbienteExecucao aux = obj.getEstado();
 		// alterando o ambiente do objeto

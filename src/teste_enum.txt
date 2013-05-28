@@ -14,26 +14,33 @@
 		int massa = 0,
 		int raio = 0,
 		int populacao = 0,
-		int temperatura = 0;
+		int G = 3,
+		int gravidade = 0,
+		int temperatura = 0,
+		int peso = 0;
 		
 		proc Planeta(int massa, int raio, int populacao) {
 			this.massa := massa;
 			this.raio:= raio;
 			this.populacao := populacao
-		}
+		},
+		proc superficiePeso(int suamassa) {
+			this.peso := suamassa + this.G + this.massa - this.raio + this.raio;			
+			write("Seu peso no planeta é: " ++ this.peso)
+		}		
 	};
 	
 	{
 		int alfa = 0,
 		Tempo tempo := new Tempo,
-		Planeta p := Planeta.TERRA;
+		Planeta p := Planeta.MARTE;
+		p.temperatura := 32;
 		
-		tempo.ano := 2013;		
-		write("Está no Ano: " ++ tempo.ano);
-		
-		
-		write("O seu peso é: " ++ p.massa);
+		write("Sua massa é: " ++ p.massa);
+		write("O planeta " ++ p);
 		write("O raio é: " ++ p.raio);
+		write("A temperatura é: " ++ p.temperatura);
+		p.superficiePeso(10);
 		write("Sua população é: " ++ p.populacao)
 	}
 }

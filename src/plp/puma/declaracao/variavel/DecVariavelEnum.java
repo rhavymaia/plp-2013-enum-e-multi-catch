@@ -125,7 +125,7 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 			e.printStackTrace();
 		}		
 		
-		//contextoPrincipal.changeValor(objeto, valorEnum);
+		contextoPrincipal.changeValor(objeto, valorEnum);
 		return contextoPrincipal;
 	}
 
