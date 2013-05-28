@@ -1338,7 +1338,7 @@ DecConstanteEnum PDecConstanteEnumAtomica() :
 }
 
 /**
- * ListaTipo ::=  Tipo | Tipo "," Tipo
+ * ListaTipoExcecao ::=  Tipo | Tipo "," Tipo
  */
 ListaTipoExcecao PListaTipoExcecao() :
 {
