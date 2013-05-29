@@ -94,11 +94,6 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 				tipoInstanciaReal, objeto, new ValorNull());
 		AmbienteExecucao contextoPrincipal = decVariavel.elabora(ambiente);
 
-		// Recupera a constante definida na declaração..
-		SimplesDecConstanteEnum constanteEnum = defEnum.getDecConstanteEnum()
-				.getConstanteEnum(valor);
-		constanteEnum.elabora(ambiente);
-
 		// Construir referência do Enumerador.
 		New objetoReferencia = new New(objeto, tipoInstanciaReal);
 		contextoPrincipal = objetoReferencia.executar(contextoPrincipal);
@@ -107,6 +102,11 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 		Objeto objetoInstacia = contextoPrincipal.getObjeto(
 				(ValorRef) contextoPrincipal.getValor(objeto.getId()));
 
+		// Recupera a constante definida na declaração..
+		SimplesDecConstanteEnum constanteEnum = defEnum.getDecConstanteEnum()
+				.getConstanteEnum(valor);
+		
+		// Atualizar valor das variável através do cons
 		ListaExpressao variaveis = constanteEnum.getExpressoes();
 		ValorEnum valorEnum = new ValorEnum(valor, variaveis, 
 				objetoInstacia);
