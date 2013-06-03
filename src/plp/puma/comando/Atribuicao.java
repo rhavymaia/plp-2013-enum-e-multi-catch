@@ -117,6 +117,7 @@ public class Atribuicao implements Comando {
 			// Acesso do objeto instanciado da Enum.
 			obj = ((ValorEnum) valor).getObjeto();
 		} else {
+			
 			ValorRef referencia = (ValorRef) valor;
 			obj = ambiente.getObjeto(referencia);
 		}	
