@@ -12,6 +12,7 @@ import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
 import plp.puma.expressao.ListaExpressao;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
 import plp.puma.memoria.colecao.ListaValor;
@@ -95,6 +96,12 @@ public class ChamadaProcedimento implements Comando {
 		return ambiente;
 	}
 
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * insere no contexto o resultado da associacao entre cada parametro formal
 	 * e seu correspondente parametro atual

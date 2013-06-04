@@ -12,6 +12,7 @@ import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
 import plp.puma.expressao.leftExpression.Id;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.expressao.valor.ValorString;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
@@ -53,7 +54,7 @@ public class TryCatchFinally implements Comando {
 			ambiente.incrementa();
 			ambiente = comandoTry.executar(ambiente);
 		} catch (TryCatchException e) {
-			for (Catch c : listaCatch.getCatchs()) {
+			/*for (Catch c : listaCatch.getCatchs()) {
 				for (Tipo t : c.getTiposExcecao().getTipos()) {
 					if(e.getExceptionClass().getSimpleName().equals(t.getTipo().toString())){
 						ambiente.mapValor(c.getMensagem(), new ValorString(e.getMessage()));
@@ -61,14 +62,20 @@ public class TryCatchFinally implements Comando {
 						break;
 					}
 				}
-			}
+			}*/
 		} finally {
 			ambiente = comandoFinally.executar(ambiente);
 			ambiente.restaura();
 		}
 		return ambiente;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Realiza a verificacao de tipos da expressão e dos comandos do comando
 	 * <code>TryCatchFinally</code>

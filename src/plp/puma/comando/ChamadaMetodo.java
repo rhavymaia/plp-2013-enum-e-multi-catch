@@ -102,7 +102,13 @@ public class ChamadaMetodo implements Comando {
 				.executar(aux);
 		return ambiente;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Realiza a verificação de tipos desta chamada de método, onde o tipo do
 	 * método deve estar na definição da classe obtida a partir de expressão.

@@ -14,6 +14,7 @@ import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.expressao.leftExpression.LeftExpression;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.expressao.valor.ValorRef;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
@@ -102,7 +103,13 @@ public class New implements Comando {
 		
 		return ambiente;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Verifica se a atribuição é possível comparando os tipos do objeto e da
 	 * left expression.

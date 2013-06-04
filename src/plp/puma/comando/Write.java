@@ -17,7 +17,7 @@ public class Write implements IO {
 	/**
 	 * Expressão a ser escrita.
 	 */
-	private Expressao expressao;
+	public Expressao expressao;
 
 	/**
 	 * Construtor.
@@ -44,7 +44,13 @@ public class Write implements IO {
 		System.out.println(valor);
 		return ambiente.write(valor);
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return expressao.avaliar(ambiente);
+	}
+	
 	/**
 	 * Realiza a verificacao de tipos da expressão a ser escrita na pelo comando
 	 * <code>write</code>

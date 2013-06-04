@@ -1,10 +1,12 @@
 package plp.puma.comando;
 
+import plp.puma.excecao.declaracao.ObjetoNaoDeclaradoException;
 import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
 import plp.puma.expressao.leftExpression.Id;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
 import plp.puma.util.Tipo;
@@ -46,7 +48,13 @@ public class Read implements IO {
 		ambiente.changeValor(id, ambiente.read(this.tipoId));
 		return ambiente;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Realiza a verificacao de tipos da entrada
 	 * 
