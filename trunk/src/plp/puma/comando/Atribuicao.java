@@ -72,7 +72,13 @@ public class Atribuicao implements Comando {
 			ambiente.changeValor(av.getId(), expressao.avaliar(ambiente));
 		return ambiente;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Um comando de atribuição está bem tipado, se o tipo do identificador é o
 	 * mesmo da expressão. O tipo de um identificador é determinado pelo tipo da
@@ -117,7 +123,6 @@ public class Atribuicao implements Comando {
 			// Acesso do objeto instanciado da Enum.
 			obj = ((ValorEnum) valor).getObjeto();
 		} else {
-			
 			ValorRef referencia = (ValorRef) valor;
 			obj = ambiente.getObjeto(referencia);
 		}	
