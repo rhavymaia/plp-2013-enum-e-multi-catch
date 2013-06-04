@@ -12,6 +12,7 @@ import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
 import plp.puma.expressao.leftExpression.Id;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.expressao.valor.ValorString;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
@@ -56,7 +57,13 @@ public class Catch implements Comando {
 
 		return null;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Realiza a verificacao de tipos da expressão e dos comandos do comando
 	 * <code>TryCatch</code>
@@ -83,7 +90,7 @@ public class Catch implements Comando {
 		return comandoCatch;
 	}
 
-	public Id getMensagem() {
+	public Id getId() {
 		return mensagem;
 	}
 }

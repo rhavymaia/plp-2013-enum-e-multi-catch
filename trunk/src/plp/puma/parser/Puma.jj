@@ -97,12 +97,8 @@ public class PumaParser {
                 System.out.println("Erro de tipo na inicialização do ambiente.");
             }
         } catch (Exception e) {
-          	if(e.getClass().getPackage().getName().equals("plp.puma.excecao.declaracao"))
-          		new TryCatchException(e.getMessage(), e.getClass());
-      		else {
-	        	System.out.println("Puma PLP Parser Version 0.0.1:  Encountered errors during parse.");
-	            e.printStackTrace();
-        	}
+        	System.out.println("Puma PLP Parser Version 0.0.1:  Encountered errors during parse.");
+            e.printStackTrace();
         }
     }
 }
@@ -528,10 +524,10 @@ TryFinally PTryFinally() :
 Throw PThrow() :
 {
 	Tipo tipoExcecao;
-	Valor mensagem;
+	Id mensagem;
 }
 {
-	<THROW> <NEW> tipoExcecao = PTipo() <LPAREN> mensagem = PValor() <RPAREN>
+	<THROW> <NEW> tipoExcecao = PTipo() <LPAREN> mensagem = PId() <RPAREN>
 	{
 		return new Throw(tipoExcecao, mensagem);
 	}
@@ -978,6 +974,7 @@ Expressao PExpLength() :
  * 				| "and" ExpUnaria
  * 				| "or" ExpUnaria
  * 				| "==" ExpUnaria
+ * 				| "!=" ExpUnaria
  * 				| "++" Expressao)*
  **/
 Expressao PExpBinaria() :
@@ -1010,6 +1007,11 @@ Expressao PExpBinaria() :
 	  <EQ> param2 = PExpUnaria()
 	  {
 	  	retorno = new ExpEquals(retorno, param2);
+	  }
+	|
+	  <NE> param2 = PExpUnaria()
+	  {
+	  	retorno = new ExpNotEquals(retorno, param2);
 	  }
 	|
 	  <PLUS> param2 = PExpUnaria()

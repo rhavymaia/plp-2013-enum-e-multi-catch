@@ -1,5 +1,11 @@
 package plp.puma.comando;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Stack;
+
 import plp.puma.declaracao.tipo.ListaCatch;
 import plp.puma.declaracao.tipo.ListaTipoExcecao;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
@@ -12,10 +18,15 @@ import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
+import plp.puma.expressao.Expressao;
+import plp.puma.expressao.This;
 import plp.puma.expressao.leftExpression.Id;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.expressao.valor.ValorString;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
+import plp.puma.memoria.DefClasse;
+import plp.puma.memoria.colecao.ListaValor;
 import plp.puma.util.Tipo;
 import plp.puma.util.TipoPrimitivo;
 
@@ -47,26 +58,36 @@ public class TryCatch implements Comando {
 			ObjetoNaoDeclaradoException, ClasseJaDeclaradaException,
 			ClasseNaoDeclaradaException, EntradaInvalidaException,
 			TryCatchException {
-				
+
 		try {
 			ambiente.incrementa();
 			ambiente = comandoTry.executar(ambiente);
 		} catch (TryCatchException e) {
+			boolean exceptionFound = false;
 			for (Catch c : listaCatch.getCatchs()) {
 				for (Tipo t : c.getTiposExcecao().getTipos()) {
-					if(e.getExceptionClass().getSimpleName().equals(t.getTipo().toString())){
-						ambiente.mapValor(c.getMensagem(), new ValorString(e.getMessage()));
+					if(e.getClassName().equals(t.getTipo().toString())){
+						ambiente.mapValor(c.getId(), e.getComando().getValor(ambiente));
 						c.getComandoCatch().executar(ambiente);
+						exceptionFound = true;
 						break;
 					}
 				}
+				if(exceptionFound)
+					break;
 			}
 		} finally {
 			ambiente.restaura();
 		}
 		return ambiente;
 	}
-
+	
+	public Valor getValor(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoNaoDeclaradoException, TryCatchException {
+		return null;
+	}
+	
 	/**
 	 * Realiza a verificacao de tipos da expressão e dos comandos do comando
 	 * <code>TryCatch</code>

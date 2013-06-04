@@ -16,6 +16,7 @@ import plp.puma.excecao.declaracao.TryCatchException;
 import plp.puma.excecao.declaracao.VariavelJaDeclaradaException;
 import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.excecao.execucao.EntradaInvalidaException;
+import plp.puma.expressao.valor.Valor;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
 
@@ -33,6 +34,14 @@ public interface Comando {
 	 * @return o ambiente modificado pela execução do comando.
 	 */
 	public AmbienteExecucao executar(AmbienteExecucao ambiente)
+			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
+			ObjetoJaDeclaradoException, ObjetoNaoDeclaradoException,
+			ProcedimentoNaoDeclaradoException,
+			ProcedimentoJaDeclaradoException, ClasseJaDeclaradaException,
+			ClasseNaoDeclaradaException, EntradaInvalidaException,
+			TryCatchException;
+	
+	public Valor getValor(AmbienteExecucao ambiente)
 			throws VariavelJaDeclaradaException, VariavelNaoDeclaradaException,
 			ObjetoJaDeclaradoException, ObjetoNaoDeclaradoException,
 			ProcedimentoNaoDeclaradoException,

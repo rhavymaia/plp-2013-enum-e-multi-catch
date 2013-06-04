@@ -2,6 +2,7 @@ package plp.puma.excecao.declaracao;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 
+import plp.puma.comando.Comando;
 import plp.puma.expressao.leftExpression.Id;
 import plp.puma.util.Tipo;
 
@@ -11,19 +12,19 @@ import plp.puma.util.Tipo;
  * 
  */
 public class TryCatchException extends Exception {
-	private Class exceptionClass;
-	private String msg;
+	private String className;
+	private Comando cmd;
 	
-	public TryCatchException(String msg, Class t){
-		this.exceptionClass = t;
-		this.msg = msg;
+	public TryCatchException(Comando cmd, String className){
+		this.className = className;
+		this.cmd = cmd;
 	}
 
-	public Class getExceptionClass() {
-		return exceptionClass;
+	public String getClassName() {
+		return className;
 	}
 	
-	public String getMessage(){
-		return msg;
+	public Comando getComando(){
+		return cmd;
 	}
 }
