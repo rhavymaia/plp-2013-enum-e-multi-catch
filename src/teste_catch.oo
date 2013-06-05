@@ -30,7 +30,7 @@
     		if(token != "ABC"){
 	    		throw new TokenInvalidoException(token)
     		};
-    		write("Sem Exceptions!")
+    		write("Token válido!")
     	}
 	    catch (TokenInvalidoException | TokenExpiradoException e1) {	
 	    	write("Exception no Catch #1");
@@ -39,6 +39,9 @@
 	    catch (TokenVazioException e2) {
 	    	write("Exception no Catch #2");
 	    	write(e2)
+    	}
+    	finally {
+    		write("Finally!")
     	}
 	}
 }
