@@ -38,12 +38,19 @@ public class Throw implements Comando {
 		Comando cmd = null;
 		String className = null;
 		try {
+			boolean exceptionFound = false;
 			Stack<HashMap<Id, DefClasse>> classes = ambiente.getPilhaDefClasse();
 			for (HashMap<Id, DefClasse> hashMap : classes) {
 				for (Entry<Id, DefClasse> entry : hashMap.entrySet()) {
-					cmd = entry.getValue().getMetodo(new Id("getMensagem")).getComando();
-					className = entry.getKey().toString();
+					if(tipoExcecao.getTipo().toString().equals(entry.getKey().toString())){
+						cmd = entry.getValue().getMetodo(new Id("getMensagem")).getComando();
+						className = entry.getKey().toString();
+						exceptionFound = true;
+						break;
+					}
 				}
+				if(exceptionFound)
+					break;
 			}
 			throw new Exception();
 		} catch (ClassNotFoundException e){

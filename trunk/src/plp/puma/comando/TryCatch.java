@@ -73,8 +73,6 @@ public class TryCatch implements Comando {
 						break;
 					}
 				}
-				if(exceptionFound)
-					break;
 			}
 		} finally {
 			ambiente.restaura();
