@@ -5,3 +5,10 @@
 /PumaParserTokenManager.java
 /Token.java
 /TokenMgrError.java
+/JavaCharStream.java
+/ParseException.java
+/PumaParser.java
+/PumaParserConstants.java
+/PumaParserTokenManager.java
+/Token.java
+/TokenMgrError.java
