@@ -54,15 +54,17 @@ public class TryCatchFinally implements Comando {
 			ambiente.incrementa();
 			ambiente = comandoTry.executar(ambiente);
 		} catch (TryCatchException e) {
-			/*for (Catch c : listaCatch.getCatchs()) {
+			boolean exceptionFound = false;
+			for (Catch c : listaCatch.getCatchs()) {
 				for (Tipo t : c.getTiposExcecao().getTipos()) {
-					if(e.getExceptionClass().getSimpleName().equals(t.getTipo().toString())){
-						ambiente.mapValor(c.getMensagem(), new ValorString(e.getMessage()));
+					if(e.getClassName().equals(t.getTipo().toString())){
+						ambiente.mapValor(c.getId(), e.getComando().getValor(ambiente));
 						c.getComandoCatch().executar(ambiente);
+						exceptionFound = true;
 						break;
 					}
 				}
-			}*/
+			}
 		} finally {
 			ambiente = comandoFinally.executar(ambiente);
 			ambiente.restaura();
