@@ -1,0 +1,34 @@
+{
+	enum Carro {
+		FUSCA(2012, 2012),
+		VOYAGE(2013, 2014),
+		GOL(2010, 2011);
+		
+		int fabricacao = 0,
+		int modelo = 0;
+		
+		proc Carro(int fabricacao, int modelo) {
+			this.fabricacao := fabricacao;
+			this.modelo:= modelo
+		}		
+	},
+	classe Montadora {
+		string nome = "Volkswagen";
+
+		proc fabricar(Carro carro){
+			write("Montadora: " ++ this.nome);
+			write("Fabricação");
+			write("Carro: " ++ carro);
+			write("Ano: " ++ carro.fabricacao);
+			write("Modelo: " ++ carro.modelo)
+		}
+	};	
+	{
+		Montadora montadora := new Montadora,
+		Carro fusca := Carro.FUSCA,
+		Carro voyage := Carro.VOYAGE;
+				
+		montadora.fabricar(fusca);
+		montadora.fabricar(voyage)
+	}
+}
