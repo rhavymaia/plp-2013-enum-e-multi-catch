@@ -6,9 +6,11 @@ import plp.puma.excecao.declaracao.VariavelNaoDeclaradaException;
 import plp.puma.expressao.valor.Valor;
 import plp.puma.expressao.valor.ValorConcreto;
 import plp.puma.expressao.valor.ValorRef;
+import plp.puma.expressao.valor.ValorString;
 import plp.puma.memoria.AmbienteCompilacao;
 import plp.puma.memoria.AmbienteExecucao;
 import plp.puma.memoria.Objeto;
+import plp.puma.memoria.ObjetoEnum;
 import plp.puma.util.Tipo;
 
 /**
@@ -84,7 +86,13 @@ public class Id implements LeftExpression { // ,IDominio{
 			// recuperando o ambiente do objeto
 			AmbienteExecucao aux = obj.getEstado();
 			// alterando o ambiente do objeto
-			valor = (ValorConcreto) aux.getValor(new Id("valor"));
+			if (obj instanceof ObjetoEnum) {
+				String id = ((ObjetoEnum) obj).getConstante().toString();
+				ValorString constante = new ValorString(id);
+				valor = (ValorConcreto) constante;
+			} else {
+				valor = (ValorConcreto) aux.getValor(new Id("valor"));
+			}			
 		}
 		return valor;
 	}

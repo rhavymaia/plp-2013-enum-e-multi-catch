@@ -2,10 +2,10 @@ package plp.puma.declaracao.variavel;
 
 import plp.puma.comando.ChamadaMetodo;
 import plp.puma.comando.New;
+import plp.puma.declaracao.comando.AtribuicaoEnum;
 import plp.puma.declaracao.constante.SimplesDecConstanteEnum;
 import plp.puma.excecao.declaracao.ClasseJaDeclaradaException;
 import plp.puma.excecao.declaracao.ClasseNaoDeclaradaException;
-import plp.puma.excecao.declaracao.ConstanteEnumNaoDeclaradaException;
 import plp.puma.excecao.declaracao.ObjetoJaDeclaradoException;
 import plp.puma.excecao.declaracao.ObjetoNaoDeclaradoException;
 import plp.puma.excecao.declaracao.ProcedimentoJaDeclaradoException;
@@ -40,13 +40,13 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 	 * 
 	 * @param tipo
 	 *            Tipo declarado da variável.
-	 * @param objeto
+	 * @param identificador
 	 *            Identificador do objeto.
 	 * @param classe
 	 *            Classe da qual objeto é uma instância.
 	 */
-	public DecVariavelEnum(Tipo tipo, Id objeto, Id classe, Id valor) {
-		super(tipo, objeto, new TipoClasse(classe));
+	public DecVariavelEnum(Tipo tipo, Id identificador, Id classe, Id valor) {
+		super(tipo, identificador, new TipoClasse(classe));
 		this.valor = valor;
 	}
 
@@ -58,7 +58,7 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 	 * @return o tipo do identificador
 	 */
 	public Tipo getTipo(Id id) throws VariavelNaoDeclaradaException {
-		if (this.objeto.equals(id)) {
+		if (this.identificador.equals(id)) {
 			return tipo;
 		} else {
 			throw new VariavelNaoDeclaradaException(id);
@@ -91,16 +91,16 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 
 		// Inserir variáveis do Enumerador.
 		SimplesDecVariavel decVariavel = new SimplesDecVariavel(
-				tipoInstanciaReal, objeto, new ValorNull());
+				tipoInstanciaReal, identificador, new ValorNull());
 		AmbienteExecucao contextoPrincipal = decVariavel.elabora(ambiente);
 
 		// Construir referência do Enumerador.
-		New objetoReferencia = new New(objeto, tipoInstanciaReal);
+		AtribuicaoEnum objetoReferencia = new AtribuicaoEnum(valor, identificador, tipoInstanciaReal);
 		contextoPrincipal = objetoReferencia.executar(contextoPrincipal);
 		
 		// Inserir o valor da constante no contexto de execução do objeto
-		Objeto objetoInstacia = contextoPrincipal.getObjeto(
-				(ValorRef) contextoPrincipal.getValor(objeto.getId()));
+		ValorRef valorRef = (ValorRef) contextoPrincipal.getValor(identificador.getId());
+		Objeto objetoInstacia = contextoPrincipal.getObjeto(valorRef);
 
 		// Recupera a constante definida na declaração..
 		SimplesDecConstanteEnum constanteEnum = defEnum.getDecConstanteEnum()
@@ -111,10 +111,10 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 		ValorEnum valorEnum = new ValorEnum(valor, variaveis, 
 				objetoInstacia);
 		
-		AmbienteExecucao contextoObjeto = new SimplesDecVariavel(tipo, objeto,
+		AmbienteExecucao contextoObjeto = new SimplesDecVariavel(tipo, identificador,
 				valorEnum).elabora(objetoInstacia.getEstado());
 
-		ChamadaMetodo chamada = new ChamadaMetodo(objeto, tipoEnum, variaveis);
+		ChamadaMetodo chamada = new ChamadaMetodo(identificador, tipoEnum, variaveis);
 		try {
 			chamada.executar(contextoPrincipal);
 		} catch (ProcedimentoNaoDeclaradoException e) {
@@ -123,9 +123,8 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 			e.printStackTrace();
 		} catch (EntradaInvalidaException e) {
 			e.printStackTrace();
-		}		
+		}
 		
-		contextoPrincipal.changeValor(objeto, valorEnum);
 		return contextoPrincipal;
 	}
 
@@ -146,7 +145,7 @@ public class DecVariavelEnum extends DecVariavelObjeto {
 		boolean resposta = false;
 		if (tipoInstancia.eValido(ambiente) && tipo.eValido(ambiente)) {
 			resposta = tipoInstancia.equals(tipo);
-			ambiente.mapTipo(objeto, tipoInstancia);
+			ambiente.mapTipo(identificador, tipoInstancia);
 		}
 		return resposta;
 	}
