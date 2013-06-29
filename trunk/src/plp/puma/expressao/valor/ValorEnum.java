@@ -24,7 +24,18 @@ public class ValorEnum extends ValorConcreto {
 	
 	// Comandos
 	private Objeto objeto;
+	
+	private ValorRef valorRef;
 
+	/**
+	 * cria um objeto encapsulando o String fornecido
+	 */
+	public ValorEnum(Id valor, ListaExpressao variaveis, ValorRef valorRef) {
+		this.valor = valor;
+		this.variaveis = variaveis;
+		this.valorRef = valorRef;
+	}
+	
 	/**
 	 * cria um objeto encapsulando o String fornecido
 	 */
@@ -180,5 +191,13 @@ public class ValorEnum extends ValorConcreto {
 
 	public void setVariaveis(ListaExpressao variaveis) {
 		this.variaveis = variaveis;
+	}
+
+	public ValorRef getValorRef() {
+		return valorRef;
+	}
+
+	public void setValorRef(ValorRef valorRef) {
+		this.valorRef = valorRef;
 	}
 }

@@ -27,7 +27,7 @@ public class DecVariavelObjeto implements DecVariavel {
 	/**
 	 * Identificador representando o objeto.
 	 */
-	protected Id objeto;
+	protected Id identificador;
 	/**
 	 * Tipo da classe da qual objeto é uma instância.
 	 */
@@ -38,15 +38,15 @@ public class DecVariavelObjeto implements DecVariavel {
 	 * 
 	 * @param tipoVariavel
 	 *            Tipo declarado da variável.
-	 * @param nomeVariavel
+	 * @param identificador
 	 *            Identificador do objeto.
-	 * @param nomeVariavel
+	 * @param identificador
 	 *            Classe da qual objeto é uma instância.
 	 */
-	public DecVariavelObjeto(Tipo tipoVariavel, Id nomeVariavel,
+	public DecVariavelObjeto(Tipo tipoVariavel, Id identificador,
 			Tipo tipoInstancia) {
 		this.tipo = tipoVariavel;
-		this.objeto = nomeVariavel;
+		this.identificador = identificador;
 		this.tipoInstancia = tipoInstancia;
 	}
 
@@ -58,7 +58,7 @@ public class DecVariavelObjeto implements DecVariavel {
 	 * @return o tipo do identificador
 	 */
 	public Tipo getTipo(Id id) throws VariavelNaoDeclaradaException {
-		if (this.objeto.equals(id)) {
+		if (this.identificador.equals(id)) {
 			return tipo;
 		} else {
 			throw new VariavelNaoDeclaradaException(id);
@@ -86,10 +86,10 @@ public class DecVariavelObjeto implements DecVariavel {
 			tipoInstanciaReal = ambiente.getTipoReal(tipoInstancia);
 		}
 
-		AmbienteExecucao aux = new SimplesDecVariavel(tipoVariavelReal, objeto,
+		AmbienteExecucao aux = new SimplesDecVariavel(tipoVariavelReal, identificador,
 				new ValorNull()).elabora(ambiente);
 		if (!this.tipoInstancia.equals(TipoClasse.TIPO_NULL)) {
-			aux = new New(objeto, tipoInstanciaReal).executar(aux);
+			aux = new New(identificador, tipoInstanciaReal).executar(aux);
 		}
 		return aux;
 	}
@@ -114,7 +114,7 @@ public class DecVariavelObjeto implements DecVariavel {
 			if (!tipoInstancia.equals(TipoClasse.TIPO_NULL)) {
 				resposta = resposta && tipoInstancia.equals(tipo);
 			}
-			ambiente.mapTipo(objeto, tipo);
+			ambiente.mapTipo(identificador, tipo);
 		}
 		return resposta;
 	}
